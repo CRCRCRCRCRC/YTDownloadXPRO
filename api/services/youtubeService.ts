@@ -44,12 +44,8 @@ export class YouTubeService {
    * 獲取影片資訊
    */
   static async getVideoInfo(url: string): Promise<VideoInfo> {
-    console.log(`[YouTubeService] 開始獲т取影片資訊: ${url}`);
+    console.log(`[YouTubeService] 開始獲取影片資訊: ${url}`);
     
-    // Debug: Check if YT_COOKIE is loaded
-    console.log(`[YouTubeService] YT_COOKIE exists: ${!!process.env.YT_COOKIE}`);
-    console.log(`[YouTubeService] YT_COOKIE length: ${process.env.YT_COOKIE?.length || 0}`);
-
     const maxRetries = 3;
     const retryDelay = 2000; // 2 seconds
     
