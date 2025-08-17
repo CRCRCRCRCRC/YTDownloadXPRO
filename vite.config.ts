@@ -23,6 +23,11 @@ export default defineConfig({
         target: `http://localhost:${process.env.PORT || 3001}`,
         changeOrigin: true,
         secure: false,
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            console.log(`[proxy] ${req.method} ${req.url} -> ${options.target}${proxyReq.path}`);
+          });
+        },
       }
     }
   }
