@@ -89,7 +89,7 @@ export class YouTubeService {
 
         // 處理格式資訊
         console.log(`[YouTubeService] 處理影片格式...`);
-        const formats = this.processFormats(info.formats);
+        const formats = this.processFormats(info.formats, process.env.VERCEL ? { allowVideoOnly: false } : { allowVideoOnly: true });
         console.log(`[YouTubeService] 找到 ${formats.length} 個可用格式`);
 
         const videoInfo: VideoInfo = {
@@ -157,15 +157,15 @@ export class YouTubeService {
   }
 
   /**
-   * 處理影片格式 - 優先提供「含音訊」的合併格式；若無則提供同畫質的「僅影片」格式（將於下載時自動合併音訊）
+   * 處理影片格式 - 優先提供「含音訊」的合併格式；可選擇是否包含「僅影片」格式（VERCEL 環境預設關閉）
    */
-  private static processFormats(formats: ytdl.videoFormat[]): VideoFormat[] {
+  private static processFormats(formats: ytdl.videoFormat[], opts: { allowVideoOnly: boolean } = { allowVideoOnly: true }): VideoFormat[] {
     const qualityMap = new Map<string, VideoFormat>();
 
     console.log(`[YouTubeService] 處理 ${formats.length} 個原始格式`);
 
     const combinedFormats = formats.filter(f => f.hasVideo && f.hasAudio && !!f.qualityLabel);
-    const videoOnlyFormats = formats.filter(f => f.hasVideo && !f.hasAudio && !!f.qualityLabel);
+    const videoOnlyFormats = opts.allowVideoOnly ? formats.filter(f => f.hasVideo && !f.hasAudio && !!f.qualityLabel) : [];
 
     console.log(`[YouTubeService] 找到 ${combinedFormats.length} 個合併格式, ${videoOnlyFormats.length} 個僅影片格式`);
 
@@ -186,7 +186,6 @@ export class YouTubeService {
       const quality = format.qualityLabel;
       const current: VideoFormat = {
         quality,
-        // 顯示上統一為 MP4（實際來源容器於 originalFormat 中保存）
         container: 'mp4',
         hasVideo: true,
         hasAudio: true,
@@ -201,14 +200,14 @@ export class YouTubeService {
       }
     });
 
-    // 再用僅影片格式補齊沒有合併格式的高畫質選項
+    // 可選：用僅影片格式補齊沒有合併格式的高畫質選項（在 Vercel 預設關閉）
     videoOnlyFormats.forEach(format => {
       if (!format.qualityLabel) return;
       const quality = format.qualityLabel;
       if (qualityMap.has(quality)) return; // 該畫質已有合併格式
       const current: VideoFormat = {
         quality,
-        container: 'mp4', // 顯示為 MP4，實際轉檔
+        container: 'mp4',
         hasVideo: true,
         hasAudio: false,
         filesize: estimateSize(format),
