@@ -32,3 +32,4 @@ dist-ssr
 # Build artifacts
 .vercel
 .render
+.trae

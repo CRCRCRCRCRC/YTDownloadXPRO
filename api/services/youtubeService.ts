@@ -65,26 +65,24 @@ export class YouTubeService {
         }
         console.log(`[YouTubeService] 影片ID: ${videoId}`);
 
-        // 檢查快取 - 暫時跳過快取以進行調試
+        // 檢查快取（命中即直接回傳）
         if (attempt === 1) {
           console.log(`[YouTubeService] 檢查快取...`);
-          console.log(`[YouTubeService] 跳過快取以進行調試`);
-          // const cachedVideo = await this.getCachedVideo(videoId);
-          // if (cachedVideo) {
-          //   console.log(`[YouTubeService] 使用快取的影片資訊`);
-          //   return cachedVideo;
-          // }
+          const cachedVideo = await this.getCachedVideo(videoId);
+          if (cachedVideo) {
+            console.log(`[YouTubeService] 使用快取的影片資訊`);
+            return cachedVideo;
+          }
         }
 
         // 獲取影片資訊
         console.log(`[YouTubeService] 從YouTube獲取影片資訊... (Attempt ${attempt}/${maxRetries})`);
-        const info = await ytdl.getInfo(url, {
-          requestOptions: {
-            headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            }
-          }
-        });
+        const headers: Record<string, string> = {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          'Accept-Language': process.env.YT_ACCEPT_LANGUAGE || 'zh-TW,zh;q=0.9,en;q=0.8',
+        };
+        if (process.env.YT_COOKIE) headers.cookie = process.env.YT_COOKIE;
+        const info = await ytdl.getInfo(url, { requestOptions: { headers } });
         
         console.log(`[YouTubeService] 成功獲取影片資訊`);
         const videoDetails = info.videoDetails;
@@ -118,8 +116,9 @@ export class YouTubeService {
           stack: error instanceof Error ? error.stack : undefined
         });
         
-        // Check if this is a retryable error
+        // Check if this is a retryable error（含 429 限流）
         const isRetryableError = error instanceof Error && (
+          error.message.includes('Status code: 429') ||
           error.message.includes('Could not extract functions') ||
           error.message.includes('Video unavailable') ||
           error.message.includes('ECONNRESET') ||
@@ -147,9 +146,10 @@ export class YouTubeService {
           throw new Error(`無法獲取影片資訊: ${error instanceof Error ? error.message : '未知錯誤'}`);
         }
         
-        // Wait before retrying
-        console.log(`[Retry] Waiting ${retryDelay}ms before retry...`);
-        await new Promise(resolve => setTimeout(resolve, retryDelay));
+        // Exponential backoff before retrying
+        const waitMs = retryDelay * Math.pow(2, attempt - 1);
+        console.log(`[Retry] Waiting ${waitMs}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, waitMs));
       }
     }
     
