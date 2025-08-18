@@ -87,10 +87,7 @@ router.post('/download', async (req: Request, res: Response) => {
     const getInfoWithRetry = async (url: string, maxRetries = 3): Promise<any> => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-          return await ytdl.getInfo(url, { 
-            debug: process.env.YT_DEBUG === 'true', 
-            htmlDebug: process.env.YT_DEBUG === 'true' 
-          });
+          return await ytdl.getInfo(url);
         } catch (error: any) {
           console.error(`Attempt ${attempt} failed:`, error.message);
           if (attempt === maxRetries) {
@@ -351,13 +348,8 @@ router.post('/download', async (req: Request, res: Response) => {
     const createStreamWithRetry = async (url: string, options: any, maxRetries = 2): Promise<any> => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-          // 確保選項包含禁用調試文件的設定
-          const safeOptions = {
-            ...options,
-            debug: process.env.YT_DEBUG === 'true',
-            htmlDebug: process.env.YT_DEBUG === 'true'
-          };
-          return ytdl(url, safeOptions);
+          // 使用傳入的選項
+          return ytdl(url, options);
         } catch (error: any) {
           console.error(`Stream creation attempt ${attempt} failed:`, error.message);
           if (attempt === maxRetries) {

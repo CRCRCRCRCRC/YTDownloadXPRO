@@ -77,8 +77,9 @@ YT_ACCEPT_LANGUAGE=zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7
 如果遇到 `EROFS: read-only file system` 錯誤：
 
 - 這已經在最新版本中修復
-- 系統會自動禁用調試文件寫入
-- 確保 `YT_DEBUG=false` 在環境變數中設定
+- 系統會自動攔截 ytdl-core 的調試文件寫入
+- 確保 `YTDL_NO_UPDATE=true` 在環境變數中設定
+- Vercel 環境會自動應用文件系統補丁
 
 #### 設定 YouTube Cookie (可選)
 

@@ -10,6 +10,30 @@ import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import videoRoutes from './routes/video.js';
 
+// 設置環境變數來禁用 ytdl-core 的調試功能
+process.env.YTDL_NO_UPDATE = 'true';
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+
+// 在 Vercel 環境中禁用文件寫入來避免 EROFS 錯誤
+if (process.env.VERCEL) {
+  try {
+    const fs = require('fs');
+    const originalWriteFileSync = fs.writeFileSync;
+    
+    fs.writeFileSync = function(file: any, data: any, options?: any) {
+      // 如果是 ytdl-core 的調試文件，忽略寫入
+      if (typeof file === 'string' && (file.includes('watch.html') || file.includes('debug'))) {
+        console.log(`[Vercel] Skipping file write: ${file}`);
+        return;
+      }
+      // 其他文件正常寫入
+      return originalWriteFileSync.call(this, file, data, options);
+    };
+  } catch (error) {
+    console.warn('[Vercel] Failed to patch fs.writeFileSync:', error);
+  }
+}
+
 // for esm mode
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

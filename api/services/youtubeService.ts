@@ -45,10 +45,7 @@ export class YouTubeService {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
         }
-      },
-      // 禁用調試文件寫入
-      debug: process.env.YT_DEBUG === 'true',
-      htmlDebug: process.env.YT_DEBUG === 'true'
+      }
     };
     
     try {
@@ -56,11 +53,8 @@ export class YouTubeService {
     } catch (error) {
       console.log(`[YouTubeService] 備用方法也失敗，嘗試最基本的請求...`);
       
-      // 最後嘗試：使用最基本的選項但仍禁用文件寫入
-      return await ytdl.getInfo(url, { 
-        debug: process.env.YT_DEBUG === 'true', 
-        htmlDebug: process.env.YT_DEBUG === 'true' 
-      });
+      // 最後嘗試：使用最基本的選項
+      return await ytdl.getInfo(url);
     }
   }
 
@@ -138,11 +132,7 @@ export class YouTubeService {
             timeout: 30000,
             // 使用 IPv4 來避免某些網路問題
             family: 4
-          },
-          // 禁用調試文件寫入（Vercel 環境是唯讀的）
-          debug: process.env.YT_DEBUG === 'true',
-          // 禁用 HTML 調試文件保存
-          htmlDebug: process.env.YT_DEBUG === 'true'
+          }
         };
 
         let info;

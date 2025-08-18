@@ -14,7 +14,7 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhY
 ### YouTube 配置
 ```
 YT_ACCEPT_LANGUAGE=zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7
-YT_DEBUG=false
+YTDL_NO_UPDATE=true
 ```
 
 ### 伺服器配置
@@ -39,6 +39,7 @@ YT_COOKIE=你的YouTube Cookie內容
 
 ## 重要提醒
 
-- `YT_DEBUG=false` 是必要的，因為 Vercel 環境是唯讀的
+- `YTDL_NO_UPDATE=true` 有助於避免 ytdl-core 的調試文件寫入
+- 應用已經包含了 Vercel 環境的文件系統補丁
 - 不要在 GitHub 儲存庫中提交真實的 API 金鑰
 - 使用 Vercel 的環境變數功能來安全地儲存敏感資訊
