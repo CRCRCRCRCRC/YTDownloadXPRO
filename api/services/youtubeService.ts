@@ -129,13 +129,9 @@ export class YouTubeService {
           requestOptions: { 
             headers,
             // 增加超時時間
-            timeout: 30000
-          },
-          // 使用 IPv4 來避免某些網路問題
-          requestOptions: {
-            headers,
-            family: 4,
-            timeout: 30000
+            timeout: 30000,
+            // 使用 IPv4 來避免某些網路問題
+            family: 4
           }
         };
 
@@ -309,7 +305,7 @@ export class YouTubeService {
       const qNum = (q?: string) => {
         if (typeof q !== 'string') return 0;
         const m = q.match(/(\d+)p/);
-        return m ? parseInt(m, 10) : 0;
+        return m ? parseInt(m[1], 10) : 0;
       };
       const qb = qNum(b.quality);
       const qa = qNum(a.quality);
