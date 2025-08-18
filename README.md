@@ -72,6 +72,14 @@ YT_ACCEPT_LANGUAGE=zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7
 2. **嘗試其他影片**: 某些影片可能有特殊限制
 3. **設定 Cookie** (進階): 如果問題持續，可以設定 YouTube Cookie
 
+### 檔案系統錯誤 (Vercel 部署)
+
+如果遇到 `EROFS: read-only file system` 錯誤：
+
+- 這已經在最新版本中修復
+- 系統會自動禁用調試文件寫入
+- 確保 `YT_DEBUG=false` 在環境變數中設定
+
 #### 設定 YouTube Cookie (可選)
 
 1. 在瀏覽器中打開 YouTube
