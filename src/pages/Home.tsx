@@ -48,6 +48,10 @@ const Home: React.FC = () => {
           setError('此影片為私人影片或已被移除');
         } else if (errorMsg.includes('region')) {
           setError('此影片在您的地區不可用');
+        } else if (errorMsg.includes('暫時限制存取') || errorMsg.includes('機器人')) {
+          setError('YouTube 暫時限制存取，請等待幾分鐘後再試，或嘗試其他影片');
+        } else if (errorMsg.includes('服務暫時不可用')) {
+          setError('YouTube 服務暫時不可用，請稍後再試');
         } else {
           setError(errorMsg);
         }

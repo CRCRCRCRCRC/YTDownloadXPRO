@@ -57,9 +57,29 @@ app.get('*', (req: Request, res: Response, next: NextFunction) => {
  * error handler middleware
  */
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({
+  console.error('Server Error:', {
+    message: error.message,
+    stack: error.stack,
+    url: req.url,
+    method: req.method,
+    body: req.body
+  });
+  
+  // 根據錯誤類型提供更具體的回應
+  let statusCode = 500;
+  let errorMessage = 'Server internal error';
+  
+  if (error.message.includes('YouTube') || error.message.includes('機器人')) {
+    statusCode = 503;
+    errorMessage = error.message;
+  } else if (error.message.includes('Invalid') || error.message.includes('無效')) {
+    statusCode = 400;
+    errorMessage = error.message;
+  }
+  
+  res.status(statusCode).json({
     success: false,
-    error: 'Server internal error'
+    error: errorMessage
   });
 });
 

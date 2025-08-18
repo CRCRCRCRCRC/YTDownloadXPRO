@@ -34,6 +34,31 @@ export class YouTubeService {
   }
 
   /**
+   * 使用不同的選項重新嘗試獲取影片資訊
+   */
+  private static async getInfoWithAlternativeMethod(url: string): Promise<any> {
+    console.log(`[YouTubeService] 嘗試備用方法獲取影片資訊...`);
+    
+    // 使用最簡單的選項
+    const basicOptions = {
+      requestOptions: {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        }
+      }
+    };
+    
+    try {
+      return await ytdl.getInfo(url, basicOptions);
+    } catch (error) {
+      console.log(`[YouTubeService] 備用方法也失敗，嘗試最基本的請求...`);
+      
+      // 最後嘗試：完全不使用自定義選項
+      return await ytdl.getInfo(url);
+    }
+  }
+
+  /**
    * 驗證YouTube URL是否有效
    */
   static isValidUrl(url: string): boolean {
@@ -77,12 +102,58 @@ export class YouTubeService {
 
         // 獲取影片資訊
         console.log(`[YouTubeService] 從YouTube獲取影片資訊... (Attempt ${attempt}/${maxRetries})`);
+        
+        // 更完整的請求標頭來模擬真實瀏覽器
         const headers: Record<string, string> = {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-          'Accept-Language': process.env.YT_ACCEPT_LANGUAGE || 'zh-TW,zh;q=0.9,en;q=0.8',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'DNT': '1',
+          'Connection': 'keep-alive',
+          'Upgrade-Insecure-Requests': '1',
+          'Sec-Fetch-Dest': 'document',
+          'Sec-Fetch-Mode': 'navigate',
+          'Sec-Fetch-Site': 'none',
+          'Sec-Fetch-User': '?1',
+          'Cache-Control': 'max-age=0'
         };
-        if (process.env.YT_COOKIE) headers.cookie = process.env.YT_COOKIE;
-        const info = await ytdl.getInfo(url, { requestOptions: { headers } });
+
+        // 如果有設定 cookie，使用新格式
+        if (process.env.YT_COOKIE) {
+          headers.cookie = process.env.YT_COOKIE;
+        }
+
+        // 使用更寬鬆的選項來避免檢測
+        const ytdlOptions = {
+          requestOptions: { 
+            headers,
+            // 增加超時時間
+            timeout: 30000
+          },
+          // 使用 IPv4 來避免某些網路問題
+          requestOptions: {
+            headers,
+            family: 4,
+            timeout: 30000
+          }
+        };
+
+        let info;
+        try {
+          info = await ytdl.getInfo(url, ytdlOptions);
+        } catch (primaryError: any) {
+          console.log(`[YouTubeService] 主要方法失敗: ${primaryError.message}`);
+          
+          // 如果是機器人檢測錯誤，嘗試備用方法
+          if (primaryError.message.includes('登入帳戶以確認你不是機器人') || 
+              primaryError.message.includes('Sign in to confirm you\'re not a bot')) {
+            console.log(`[YouTubeService] 檢測到機器人驗證，嘗試備用方法...`);
+            info = await this.getInfoWithAlternativeMethod(url);
+          } else {
+            throw primaryError;
+          }
+        }
         
         console.log(`[YouTubeService] 成功獲取影片資訊`);
         const videoDetails = info.videoDetails;
@@ -116,24 +187,29 @@ export class YouTubeService {
           stack: error instanceof Error ? error.stack : undefined
         });
         
-        // Check if this is a retryable error（含 429 限流）
+        // Check if this is a retryable error（含 429 限流和機器人檢測）
         const isRetryableError = error instanceof Error && (
           error.message.includes('Status code: 429') ||
           error.message.includes('Could not extract functions') ||
           error.message.includes('Video unavailable') ||
           error.message.includes('ECONNRESET') ||
           error.message.includes('ETIMEDOUT') ||
-          error.message.includes('socket hang up')
+          error.message.includes('socket hang up') ||
+          error.message.includes('登入帳戶以確認你不是機器人') ||
+          error.message.includes('Sign in to confirm you\'re not a bot') ||
+          error.message.includes('This helps protect our community')
         );
         
         // If this is the last attempt or not a retryable error, throw
         if (attempt === maxRetries || !isRetryableError) {
           // 提供更具體的錯誤訊息
           if (error instanceof Error) {
-            if (error.message.includes('Could not extract functions')) {
-              throw new Error('YouTube service temporarily unavailable, please try again later. This may be due to YouTube API updates');
+            if (error.message.includes('登入帳戶以確認你不是機器人') || error.message.includes('Sign in to confirm you\'re not a bot')) {
+              throw new Error('YouTube 暫時限制存取，請稍後再試。這可能是由於請求過於頻繁導致的');
+            } else if (error.message.includes('Could not extract functions')) {
+              throw new Error('YouTube 服務暫時不可用，請稍後再試');
             } else if (error.message.includes('Video unavailable')) {
-              throw new Error('Video temporarily unavailable, please try again later');
+              throw new Error('影片暫時無法存取，請稍後再試');
             } else if (error.message.includes('Private video')) {
               throw new Error('這是私人影片，無法存取');
             } else if (error.message.includes('Age-restricted')) {
@@ -146,8 +222,17 @@ export class YouTubeService {
           throw new Error(`無法獲取影片資訊: ${error instanceof Error ? error.message : '未知錯誤'}`);
         }
         
-        // Exponential backoff before retrying
-        const waitMs = retryDelay * Math.pow(2, attempt - 1);
+        // Exponential backoff before retrying，對機器人檢測使用更長等待時間
+        let waitMs = retryDelay * Math.pow(2, attempt - 1);
+        
+        // 如果是機器人檢測錯誤，使用更長的等待時間
+        if (error instanceof Error && (
+          error.message.includes('登入帳戶以確認你不是機器人') ||
+          error.message.includes('Sign in to confirm you\'re not a bot')
+        )) {
+          waitMs = Math.max(waitMs, 5000 + (attempt * 3000)); // 至少等待 5-14 秒
+        }
+        
         console.log(`[Retry] Waiting ${waitMs}ms before retry...`);
         await new Promise(resolve => setTimeout(resolve, waitMs));
       }
@@ -224,7 +309,7 @@ export class YouTubeService {
       const qNum = (q?: string) => {
         if (typeof q !== 'string') return 0;
         const m = q.match(/(\d+)p/);
-        return m ? parseInt(m[1], 10) : 0;
+        return m ? parseInt(m, 10) : 0;
       };
       const qb = qNum(b.quality);
       const qa = qNum(a.quality);
