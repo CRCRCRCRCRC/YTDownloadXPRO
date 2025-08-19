@@ -201,8 +201,8 @@ function formatDuration(seconds: number): string {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 }
-// 
-處理 OPTIONS 請求 (CORS preflight)
+
+// 處理 OPTIONS 請求 (CORS preflight)
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,

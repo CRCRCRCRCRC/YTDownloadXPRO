@@ -143,8 +143,8 @@ export async function POST(request: NextRequest) {
     }, { status: 500 });
   }
 }
-/
-/ 處理 OPTIONS 請求 (CORS preflight)
+
+// 處理 OPTIONS 請求 (CORS preflight)
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
