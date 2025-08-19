@@ -1,6 +1,8 @@
 /**
  * local server entry file, for local development
  */
+// 確保 Vercel 補丁在所有模組載入之前執行
+import './vercel-patch.js';
 import app from './app.js';
 
 /**
