@@ -1,0 +1,26 @@
+{
+  "name": "YouTube 影片下載器",
+  "short_name": "YT Downloader",
+  "description": "簡潔高效的 YouTube 影片下載工具",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "zh-TW"
+}

@@ -1,150 +1,199 @@
 # YTDownloadXPRO
 
-一個專業的 YouTube 影片下載工具，支援多種格式和解析度。
+一個專注於提供簡潔、高效 YouTube 影片下載服務的現代化網頁應用程式。採用 Next.js 14 構建，追求極致精美、流暢、操作直覺、零干擾的使用體驗。
 
-## 🚀 功能特色
+## ✨ 核心特色
 
-- 支援多種解析度下載（144p 到 4K）
-- 自動音視頻合併
-- 智能格式選擇
-- 下載歷史記錄
-- 響應式設計
+- 🎯 **極簡設計** - 品牌調性簡潔、高級、專注、可信賴
+- 📱 **完美響應式** - 支援手機、平板、桌機的最佳體驗
+- 🎬 **智慧畫質選擇** - 自動偵測最高可用畫質，支援多種解析度
+- ⚡ **即時進度追蹤** - 清楚顯示檢查、處理、下載各階段狀態
+- 🛡️ **完善錯誤處理** - 友善的錯誤訊息和恢復機制
+- ♿ **無障礙設計** - 符合 WCAG 標準的可近用性
+- 🚀 **效能優化** - 使用 Next.js 14 App Router 和現代化工具鏈
 
 ## 🛠️ 技術棧
 
-**前端:**
-- React 18 + TypeScript
-- Vite
-- Tailwind CSS
-- React Router
-- Zustand
+- **框架**: Next.js 14 (App Router)
+- **語言**: TypeScript
+- **樣式**: Tailwind CSS
+- **測試**: Jest + React Testing Library
+- **部署**: Vercel
+- **影片處理**: ytdl-core
 
-**後端:**
-- Node.js + Express
-- ytdl-core
-- FFmpeg
-- Supabase
+## 🚀 快速開始
 
-## 📦 安裝與運行
+### 環境需求
 
-```bash
-# 安裝依賴
-npm install
+- Node.js 18.0 或更高版本
+- npm 或 yarn 或 pnpm
 
-# 開發模式（同時啟動前後端）
-npm run dev
+### 安裝步驟
 
-# 僅前端開發
-npm run client:dev
+1. **克隆專案**
+   ```bash
+   git clone <your-repo-url>
+   cd ytdownload-xpro
+   ```
 
-# 僅後端開發
-npm run server:dev
+2. **安裝依賴**
+   ```bash
+   npm install
+   # 或
+   yarn install
+   # 或
+   pnpm install
+   ```
 
-# 建置
-npm run build
-```
+3. **設定環境變數**
+   ```bash
+   cp .env.example .env.local
+   # 編輯 .env.local 填入必要的環境變數
+   ```
 
-## ⚙️ 環境配置
+4. **啟動開發伺服器**
+   ```bash
+   npm run dev
+   # 或
+   yarn dev
+   # 或
+   pnpm dev
+   ```
 
-複製 `.env` 文件並配置必要的環境變數：
+5. **開啟瀏覽器**
+   
+   訪問 [http://localhost:3000](http://localhost:3000) 查看應用程式
 
-```env
-# Supabase 配置
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-
-# 伺服器配置
-PORT=3002
-NODE_ENV=development
-
-# YouTube 配置
-YT_ACCEPT_LANGUAGE=zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7
-```
-
-## 🔧 常見問題
-
-### YouTube 機器人檢測
-
-如果遇到「登入帳戶以確認你不是機器人」錯誤：
-
-1. **等待重試**: 系統會自動重試，請等待幾分鐘
-2. **嘗試其他影片**: 某些影片可能有特殊限制
-3. **設定 Cookie** (進階): 如果問題持續，可以設定 YouTube Cookie
-
-### 檔案系統錯誤 (Vercel 部署)
-
-如果遇到 `EROFS: read-only file system` 錯誤：
-
-- 這已經在最新版本中修復
-- 系統會自動攔截 ytdl-core 的調試文件寫入
-- 確保 `YTDL_NO_UPDATE=true` 在環境變數中設定
-- Vercel 環境會自動應用文件系統補丁
-
-#### 設定 YouTube Cookie (可選)
-
-1. 在瀏覽器中打開 YouTube
-2. 開啟開發者工具 (F12)
-3. 前往 Network 標籤
-4. 重新載入頁面
-5. 找到任一請求，複製 Cookie 標頭
-6. 在 `.env` 文件中設定：
-
-```env
-YT_COOKIE=你複製的Cookie內容
-```
-
-### 測試 YouTube 服務
+## 📝 可用指令
 
 ```bash
-node test-youtube.js
+# 開發
+npm run dev          # 啟動開發伺服器 (使用 Turbopack)
+npm run build        # 建置生產版本
+npm run start        # 啟動生產伺服器
+
+# 程式碼品質
+npm run lint         # 執行 ESLint 檢查
+npm run format       # 格式化程式碼
+npm run format:check # 檢查程式碼格式
+
+# 測試
+npm run test         # 執行測試
+npm run test:watch   # 監視模式執行測試
+npm run test:coverage # 執行測試並生成覆蓋率報告
 ```
 
-## Expanding the ESLint configuration
+## 🏗️ 專案結構
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/               # API 路由
+│   │   ├── check-video/   # 影片資訊檢查
+│   │   └── download/      # 影片下載
+│   ├── globals.css        # 全域樣式
+│   ├── layout.tsx         # 根佈局
+│   └── page.tsx          # 首頁
+├── components/            # React 元件
+│   ├── ui/               # 基礎 UI 元件
+│   ├── layout/           # 佈局元件
+│   └── ...               # 功能元件
+├── hooks/                # 自定義 React Hooks
+├── lib/                  # 工具函式和配置
+└── types/                # TypeScript 型別定義
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 部署到 Vercel
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 自動部署 (推薦)
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. **連接 GitHub**
+   - 前往 [Vercel Dashboard](https://vercel.com/dashboard)
+   - 點擊 "New Project"
+   - 選擇你的 GitHub 儲存庫
+
+2. **配置專案**
+   - Framework Preset: Next.js
+   - Root Directory: `./` (預設)
+   - Build Command: `npm run build` (預設)
+   - Output Directory: `.next` (預設)
+
+3. **設定環境變數**
+   - 在 Vercel 專案設定中添加必要的環境變數
+   - 參考 `.env.example` 文件
+
+4. **部署**
+   - 點擊 "Deploy" 按鈕
+   - 等待建置完成
+
+### 手動部署
+
+```bash
+# 安裝 Vercel CLI
+npm i -g vercel
+
+# 登入 Vercel
+vercel login
+
+# 部署
+vercel
+
+# 部署到生產環境
+vercel --prod
 ```
+
+## 🧪 測試
+
+專案包含完整的測試套件：
+
+```bash
+# 執行所有測試
+npm run test
+
+# 監視模式
+npm run test:watch
+
+# 生成覆蓋率報告
+npm run test:coverage
+```
+
+測試覆蓋範圍：
+- 元件單元測試
+- Hook 測試
+- API 路由測試
+- 整合測試
+
+## 🔧 配置說明
+
+### Vercel 配置 (`vercel.json`)
+
+- API 函式超時設定為 30 秒
+- CORS 頭部配置
+- 路由重寫規則
+
+### Next.js 配置 (`next.config.ts`)
+
+- 圖片優化設定
+- 安全頭部配置
+- 效能優化選項
+
+## 🤝 貢獻指南
+
+1. Fork 專案
+2. 創建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交變更 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 開啟 Pull Request
+
+## 📄 授權
+
+此專案採用 MIT 授權 - 查看 [LICENSE](LICENSE) 文件了解詳情。
+
+## 🐛 問題回報
+
+如果你發現任何問題，請在 [Issues](https://github.com/your-username/ytdownload-xpro/issues) 頁面回報。
+
+## 📞 聯絡資訊
+
+- 專案連結: [https://github.com/your-username/ytdownload-xpro](https://github.com/your-username/ytdownload-xpro)
+- 線上展示: [https://your-app.vercel.app](https://your-app.vercel.app)

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# 網站地圖
+Sitemap: https://your-domain.vercel.app/sitemap.xml
+
+# 禁止爬取的路徑
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
