@@ -1,7 +1,9 @@
 // 確保 Vercel 補丁在 ytdl-core 載入之前執行
 import '../vercel-patch.js';
 import express, { Request, Response } from 'express';
-import ytdl from '@distube/ytdl-core';
+import ytdlWrapper from '../utils/ytdl-wrapper.js';
+// 為了向後兼容，將 ytdl 設為 ytdlWrapper 的別名
+const ytdl = ytdlWrapper;
 import { supabase } from '../config/supabase.js';
 import { YouTubeService } from '../services/youtubeService.js';
 import ffmpeg from 'fluent-ffmpeg';

@@ -1,6 +1,6 @@
 // 確保 Vercel 補丁在 ytdl-core 載入之前執行
 import '../vercel-patch.js';
-import ytdl from '@distube/ytdl-core';
+import ytdlWrapper from '../utils/ytdl-wrapper.js';
 import { supabase } from '../config/supabase.js';
 
 export interface VideoInfo {
@@ -29,7 +29,7 @@ export class YouTubeService {
    */
   static extractVideoId(url: string): string | null {
     try {
-      return ytdl.getVideoID(url);
+      return ytdlWrapper.getVideoID(url);
     } catch (error) {
       return null;
     }
@@ -51,12 +51,12 @@ export class YouTubeService {
     };
     
     try {
-      return await ytdl.getInfo(url, basicOptions);
+      return await ytdlWrapper.getInfo(url, basicOptions);
     } catch (error) {
       console.log(`[YouTubeService] 備用方法也失敗，嘗試最基本的請求...`);
       
       // 最後嘗試：使用最基本的選項
-      return await ytdl.getInfo(url);
+      return await ytdlWrapper.getInfo(url);
     }
   }
 
@@ -64,7 +64,7 @@ export class YouTubeService {
    * 驗證YouTube URL是否有效
    */
   static isValidUrl(url: string): boolean {
-    return ytdl.validateURL(url);
+    return ytdlWrapper.validateURL(url);
   }
 
   /**
@@ -134,19 +134,22 @@ export class YouTubeService {
             timeout: 30000,
             // 使用 IPv4 來避免某些網路問題
             family: 4
-          }
+          },
+          // 嘗試禁用可能的調試功能
+          lang: 'zh-TW'
         };
 
         let info;
         try {
-          info = await ytdl.getInfo(url, ytdlOptions);
+          info = await ytdlWrapper.getInfo(url, ytdlOptions);
         } catch (primaryError: any) {
           console.log(`[YouTubeService] 主要方法失敗: ${primaryError.message}`);
           
-          // 如果是機器人檢測錯誤，嘗試備用方法
+          // 如果是機器人檢測錯誤或文件系統錯誤，嘗試備用方法
           if (primaryError.message.includes('登入帳戶以確認你不是機器人') || 
-              primaryError.message.includes('Sign in to confirm you\'re not a bot')) {
-            console.log(`[YouTubeService] 檢測到機器人驗證，嘗試備用方法...`);
+              primaryError.message.includes('Sign in to confirm you\'re not a bot') ||
+              primaryError.message.includes('EROFS')) {
+            console.log(`[YouTubeService] 檢測到錯誤，嘗試備用方法...`);
             info = await this.getInfoWithAlternativeMethod(url);
           } else {
             throw primaryError;
