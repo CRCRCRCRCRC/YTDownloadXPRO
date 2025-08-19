@@ -57,7 +57,7 @@ export default function Home() {
           duration: 4000,
         });
       }
-    } catch (error) {
+    } catch {
       // 下載失敗時顯示錯誤通知
       addToast({
         type: 'error',

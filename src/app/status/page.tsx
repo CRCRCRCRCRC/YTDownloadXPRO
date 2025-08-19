@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: '系統狀態',
@@ -116,12 +117,12 @@ export default async function StatusPage() {
         </div>
 
         <div className="text-center mt-8">
-          <a 
+          <Link 
             href="/"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             返回首頁
-          </a>
+          </Link>
         </div>
       </div>
     </div>

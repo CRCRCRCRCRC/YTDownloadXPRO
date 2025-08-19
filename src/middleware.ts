@@ -29,7 +29,6 @@ export function middleware(request: NextRequest) {
   response.headers.set('Content-Security-Policy', csp);
   
   // 速率限制 (簡單實現)
-  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
   const userAgent = request.headers.get('user-agent') || '';
   
   // 阻擋可疑的 User-Agent
