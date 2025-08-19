@@ -1,5 +1,6 @@
 // 確保 Vercel 補丁在 ytdl-core 載入之前執行
 import '../vercel-patch.js';
+import ytdl from '@distube/ytdl-core';
 import ytdlWrapper from '../utils/ytdl-wrapper.js';
 import { supabase } from '../config/supabase.js';
 
@@ -29,7 +30,7 @@ export class YouTubeService {
    */
   static extractVideoId(url: string): string | null {
     try {
-      return ytdlWrapper.getVideoID(url);
+      return ytdl.getVideoID(url);
     } catch (error) {
       return null;
     }
@@ -64,7 +65,7 @@ export class YouTubeService {
    * 驗證YouTube URL是否有效
    */
   static isValidUrl(url: string): boolean {
-    return ytdlWrapper.validateURL(url);
+    return ytdl.validateURL(url);
   }
 
   /**

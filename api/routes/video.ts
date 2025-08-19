@@ -1,9 +1,8 @@
 // 確保 Vercel 補丁在 ytdl-core 載入之前執行
 import '../vercel-patch.js';
 import express, { Request, Response } from 'express';
+import ytdl from '@distube/ytdl-core';
 import ytdlWrapper from '../utils/ytdl-wrapper.js';
-// 為了向後兼容，將 ytdl 設為 ytdlWrapper 的別名
-const ytdl = ytdlWrapper;
 import { supabase } from '../config/supabase.js';
 import { YouTubeService } from '../services/youtubeService.js';
 import ffmpeg from 'fluent-ffmpeg';
@@ -91,7 +90,7 @@ router.post('/download', async (req: Request, res: Response) => {
     const getInfoWithRetry = async (url: string, maxRetries = 3): Promise<any> => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-          return await ytdl.getInfo(url);
+          return await ytdlWrapper.getInfo(url);
         } catch (error: any) {
           console.error(`Attempt ${attempt} failed:`, error.message);
           if (attempt === maxRetries) {
@@ -353,7 +352,7 @@ router.post('/download', async (req: Request, res: Response) => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
           // 使用傳入的選項
-          return ytdl(url, options);
+          return ytdlWrapper(url, options);
         } catch (error: any) {
           console.error(`Stream creation attempt ${attempt} failed:`, error.message);
           if (attempt === maxRetries) {
