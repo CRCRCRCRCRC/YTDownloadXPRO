@@ -116,8 +116,8 @@ export function useDownload(): UseDownloadReturn {
           });
       });
 
-      // 如果組件卸載，清理定時器
-      return cleanup;
+      // 清理定時器會在組件卸載時自動處理
+      // 這裡不需要返回 cleanup 函數
     } catch (error) {
       console.error('Download initialization failed:', error);
       
