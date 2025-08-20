@@ -15,7 +15,6 @@
     "test:coverage": "jest --coverage",
     "type-check": "tsc --noEmit",
     "build:analyze": "ANALYZE=true npm run build",
-    "postbuild": "next-sitemap",
     "vercel-build": "npm run build",
     "pre-deploy": "node scripts/pre-deploy.js",
     "deploy": "npm run pre-deploy && vercel --prod"
