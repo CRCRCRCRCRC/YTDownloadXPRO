@@ -15,5 +15,5 @@ export { Skeleton, SkeletonText, VideoResultSkeleton, QualitySelectorSkeleton } 
 export { ErrorMessage } from './ErrorMessage';
 export type { ErrorMessageProps } from './ErrorMessage';
 
-export { Toast, ToastItem, ToastProvider, useToast } from './Toast';
-export type { ToastType } from './Toast';
+export { ToastItem, ToastProvider, useToast } from './Toast';
+export type { Toast } from './Toast';

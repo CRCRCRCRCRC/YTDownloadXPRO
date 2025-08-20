@@ -227,5 +227,5 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
   );
 };
 
-export { Toast, ToastItem };
-export type { Toast as ToastType };
+export { ToastItem };
+export type { Toast };
