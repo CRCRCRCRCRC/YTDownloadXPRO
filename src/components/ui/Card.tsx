@@ -11,8 +11,9 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          'bg-white rounded-xl border border-gray-200 shadow-md transition-all duration-300 transform',
-          'hover:shadow-lg hover:scale-101 hover:-translate-y-1',
+          'rounded-xl border border-white/60 shadow-md transition-all duration-300 transform backdrop-blur-sm bg-white/80',
+          'hover:shadow-lg hover:scale-[1.01] hover:-translate-y-0.5',
+          'dark:bg-white/10 dark:border-white/10',
           className
         )}
         {...props}
@@ -34,7 +35,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn('px-6 py-4 border-b border-gray-200', className)}
+        className={cn('px-6 py-4 border-b border-white/60 bg-gradient-to-b from-white/70 to-white/40 backdrop-blur-sm', className)}
         {...props}
       >
         {children}
@@ -54,7 +55,7 @@ const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
     return (
       <div
         ref={ref}
-        className={cn('px-6 py-4', className)}
+        className={cn('px-6 py-5', className)}
         {...props}
       >
         {children}
@@ -74,7 +75,7 @@ const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
     return (
       <div
         ref={ref}
-        className={cn('px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl', className)}
+        className={cn('px-6 py-4 border-t border-white/60 bg-white/60 backdrop-blur-sm rounded-b-xl', className)}
         {...props}
       >
         {children}

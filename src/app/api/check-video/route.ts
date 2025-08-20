@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import ytdl from 'ytdl-core';
-import { validateYouTubeUrl } from '@/lib/validation';
+import { validateYouTubeUrl, normalizeYouTubeUrl } from '@/lib/validation';
 import type { ApiResponse, VideoData, QualityOption } from '@/types';
 
 // 設定 API 路由的運行時配置
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
           code: 'INVALID_INPUT',
           message: '請提供有效的 URL',
         },
-      }, { status: 400 });
+      }, { status: 400, headers: corsHeaders });
     }
 
     // 驗證 YouTube URL 格式
@@ -39,14 +39,15 @@ export async function POST(request: NextRequest) {
           code: 'INVALID_URL',
           message: validation.error || '無效的 YouTube URL',
         },
-      }, { status: 400 });
+      }, { status: 400, headers: corsHeaders });
     }
 
     const videoId = validation.videoId!;
+    const canonicalUrl = normalizeYouTubeUrl(url) || `https://www.youtube.com/watch?v=${videoId}`;
 
     try {
       // 檢查影片是否存在且可存取
-      const isValid = ytdl.validateURL(url);
+      const isValid = ytdl.validateURL(canonicalUrl);
       if (!isValid) {
         return NextResponse.json<ApiResponse<never>>({
           success: false,
@@ -54,11 +55,36 @@ export async function POST(request: NextRequest) {
             code: 'VIDEO_NOT_FOUND',
             message: '找不到此影片或影片無法存取',
           },
-        }, { status: 404 });
+        }, { status: 404, headers: corsHeaders });
       }
 
-      // 獲取影片資訊
-      const info = await ytdl.getInfo(videoId);
+      // 統一請求標頭（避免重複）
+      const requestOptions = {
+        headers: {
+          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36',
+          'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+        },
+      } as const;
+
+      // 獲取影片資訊（先以 URL，失敗再以 ID）
+      let info: ytdl.videoInfo | null = null;
+      try {
+        info = await ytdl.getInfo(canonicalUrl, { requestOptions });
+      } catch (e) {
+        // ignore and try with ID below
+      }
+      if ((!info || !info.videoDetails) && ytdl.validateID(videoId)) {
+        info = await ytdl.getInfo(videoId, { requestOptions });
+      }
+      if (!info || !info.videoDetails) {
+        return NextResponse.json<ApiResponse<never>>({
+          success: false,
+          error: {
+            code: 'VIDEO_NOT_FOUND',
+            message: '找不到此影片或影片無法存取',
+          },
+        }, { status: 404, headers: corsHeaders });
+      }
       const videoDetails = info.videoDetails;
 
       // 檢查影片是否為直播
@@ -69,7 +95,7 @@ export async function POST(request: NextRequest) {
             code: 'UNSUPPORTED_CONTENT',
             message: '目前無法處理直播內容',
           },
-        }, { status: 400 });
+        }, { status: 400, headers: corsHeaders });
       }
 
       // 提取可用的畫質選項
@@ -139,7 +165,7 @@ export async function POST(request: NextRequest) {
               code: 'VIDEO_UNAVAILABLE',
               message: '影片無法存取，可能是私人影片或已被刪除',
             },
-          }, { status: 404 });
+          }, { status: 404, headers: corsHeaders });
         }
         
         if (error.message.includes('age-restricted')) {
@@ -149,7 +175,7 @@ export async function POST(request: NextRequest) {
               code: 'UNSUPPORTED_CONTENT',
               message: '目前無法處理年齡限制的影片',
             },
-          }, { status: 400 });
+          }, { status: 400, headers: corsHeaders });
         }
       }
 
@@ -159,7 +185,7 @@ export async function POST(request: NextRequest) {
           code: 'SERVER_ERROR',
           message: '暫時無法檢查此影片，請稍後再試',
         },
-      }, { status: 500 });
+      }, { status: 500, headers: corsHeaders });
     }
 
   } catch (error) {
@@ -170,7 +196,7 @@ export async function POST(request: NextRequest) {
         code: 'SERVER_ERROR',
         message: '伺服器錯誤，請稍後再試',
       },
-    }, { status: 500 });
+    }, { status: 500, headers: corsHeaders });
   }
 }
 

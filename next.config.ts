@@ -31,6 +31,27 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      // 修復圖示 404 錯誤 - 將PNG圖示請求重定向到SVG
+      {
+        source: '/icon-192x192.png',
+        destination: '/app-icon.svg',
+        permanent: false,
+      },
+      {
+        source: '/icon-512x512.png',
+        destination: '/app-icon.svg',
+        permanent: false,
+      },
+      {
+        source: '/apple-touch-icon.png',
+        destination: '/app-icon.svg',
+        permanent: false,
+      },
+      {
+        source: '/favicon.ico',
+        destination: '/app-icon.svg',
+        permanent: false,
+      },
     ];
   },
   

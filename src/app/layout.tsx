@@ -47,11 +47,11 @@ export const metadata: Metadata = {
     description: '簡潔、高效的 YouTube 影片下載服務，支援多種畫質選擇，操作直覺零干擾。',
     images: [`${baseUrl}/og-image.png`],
   },
-  manifest: '/manifest.json',
+  manifest: '/manifest.json?v=2',
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    icon: '/app-icon.svg',
+    shortcut: '/app-icon.svg',
+    apple: '/app-icon.svg',
   },
   verification: {
     google: 'your-google-verification-code',
@@ -83,6 +83,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="dns-prefetch" href="https://www.youtube.com" />
         <link rel="dns-prefetch" href="https://img.youtube.com" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
