@@ -14,7 +14,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       </div>
       <Header />
       
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col" id="main-content">
         <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-14 lg:py-16">
           {children}
         </div>

@@ -57,8 +57,8 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({
   return (
     <Card className={className}>
       <CardHeader className="pb-4">
-        <h3 className="text-lg font-semibold text-gray-900">可用畫質</h3>
-        <p className="text-sm text-gray-600">選擇您想要的影片畫質</p>
+        <h3 className="text-lg font-semibold text-primary-200">可用畫質</h3>
+        <p className="text-sm text-gray-400">選擇您想要的影片畫質</p>
       </CardHeader>
       
       <CardContent className="space-y-6">
@@ -70,8 +70,8 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({
               className={`
                 flex items-center justify-between p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 transform hover:scale-102 hover:shadow-md
                 ${selectedQuality?.resolution === quality.resolution
-                  ? 'border-primary-500 bg-primary-50 shadow-md scale-102'
-                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  ? 'border-primary-500 bg-primary-900/30 shadow-md scale-102'
+                  : 'border-white/10 hover:border-white/20 hover:bg-gray-900/60'
                 }
                 ${loading ? 'opacity-50 cursor-not-allowed hover:scale-100 hover:shadow-none' : ''}
               `}
@@ -84,24 +84,24 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({
                   checked={selectedQuality?.resolution === quality.resolution}
                   onChange={() => handleQualityChange(quality)}
                   disabled={loading}
-                  className="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500"
+                  className="w-4 h-4 text-primary-400 bg-gray-900 border-gray-700 focus:ring-primary-500"
                   aria-describedby={`quality-${quality.resolution}-description`}
                 />
                 
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-primary-200">
                       {quality.resolution}
                     </span>
                     {quality.resolution === maxQuality && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-100 text-primary-800">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary-900/50 text-primary-200 border border-primary-700/60">
                         最高畫質
                       </span>
                     )}
                   </div>
                   <div
                     id={`quality-${quality.resolution}-description`}
-                    className="text-sm text-gray-500"
+                    className="text-sm text-gray-400"
                   >
                     檔案大小：約 {quality.fileSize} • 格式：{quality.format.toUpperCase()}
                   </div>
@@ -113,8 +113,8 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({
                 <svg
                   className={`w-5 h-5 ${
                     selectedQuality?.resolution === quality.resolution
-                      ? 'text-primary-500'
-                      : 'text-gray-400'
+                      ? 'text-primary-400'
+                      : 'text-gray-500'
                   }`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -128,7 +128,7 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({
         </div>
 
         {/* 下載按鈕 */}
-        <div className="pt-4 border-t border-gray-200">
+        <div className="pt-4 border-t border-white/10">
           <Button
             onClick={handleDownload}
             disabled={!selectedQuality || loading}
@@ -140,7 +140,7 @@ const QualitySelector: React.FC<QualitySelectorProps> = ({
           </Button>
           
           {selectedQuality && (
-            <p className="mt-2 text-sm text-gray-500 text-center">
+            <p className="mt-2 text-sm text-gray-400 text-center">
               將下載 {selectedQuality.resolution} 畫質，檔案大小約 {selectedQuality.fileSize}
             </p>
           )}

@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: 'YTDownloadXPRO',
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: `${baseUrl}/app-icon.svg`,
         width: 1200,
         height: 630,
         alt: 'YTDownloadXPRO - YouTube 影片下載工具',
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'YTDownloadXPRO - YouTube 影片下載工具',
     description: '簡潔、高效的 YouTube 影片下載服務，支援多種畫質選擇，操作直覺零干擾。',
-    images: [`${baseUrl}/og-image.png`],
+    images: [`${baseUrl}/app-icon.svg`],
   },
   manifest: '/manifest.json?v=2',
   icons: {
@@ -88,7 +88,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://img.youtube.com" />
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
       </head>
-      <body className="antialiased min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <body className="antialiased min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-primary-950">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-md focus:bg-gray-900 focus:text-white focus:shadow-lg">跳至主要內容</a>
         <ToastProvider>
           {children}
         </ToastProvider>

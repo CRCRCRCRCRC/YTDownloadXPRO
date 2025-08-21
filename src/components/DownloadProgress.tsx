@@ -111,11 +111,11 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
 
           {/* 狀態文字 */}
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold text-gray-900">
+            <h2 className="text-2xl font-semibold text-primary-200">
               {getStatusText()}
             </h2>
             {filename && (
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-400 text-sm">
                 檔案名稱：{filename}
               </p>
             )}
@@ -123,7 +123,7 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
 
           {/* 進度條 */}
           {status !== 'completed' && (
-            <div className="max-w-md mx-auto">
+            <div className="max-w-md mx-auto bg-gray-900/60 rounded-xl p-3 border border-white/10">
               <ProgressBar
                 value={progress}
                 showPercentage={status === 'processing'}
@@ -161,14 +161,14 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
                     onClick={onReset}
                     variant="ghost"
                     size="md"
-                    className="text-gray-600 hover:text-gray-900"
+                    className="text-primary-200 hover:text-white"
                   >
                     回到首頁
                   </Button>
                 </div>
               </div>
             ) : (
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 請稍候，正在處理您的請求...
               </div>
             )}
@@ -176,7 +176,7 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
 
           {/* 提示訊息 */}
           {status === 'completed' && (
-            <div className="bg-success-50 border border-success-200 rounded-lg p-4 text-left">
+            <div className="bg-success-900/30 border border-success-700/70 rounded-lg p-4 text-left">
               <div className="flex items-start">
                 <svg
                   className="w-5 h-5 text-success-400 mt-0.5 mr-3 flex-shrink-0"
@@ -190,7 +190,7 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
                     clipRule="evenodd"
                   />
                 </svg>
-                <div className="text-sm text-success-800">
+                <div className="text-sm text-success-200">
                   <p className="font-medium mb-1">下載準備完成</p>
                   <p>
                     點擊「立即下載」按鈕開始下載您的 MP4 檔案。

@@ -15,17 +15,17 @@ const VideoResult: React.FC<VideoResultProps> = ({ videoData, className }) => {
         <div className="space-y-6">
           {/* 檢查完成標題 */}
           <div className="text-center">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+            <h2 className="text-2xl font-semibold text-primary-200 mb-2 animate-fade-in">
               檢查完成
             </h2>
-            <div className="w-16 h-1 bg-primary-500 mx-auto rounded-full"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-primary-700 to-fuchsia-700 mx-auto rounded-full"></div>
           </div>
 
           {/* 影片資訊區域 */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* 影片縮圖 */}
             <div className="lg:col-span-1">
-              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
+              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800 animate-fade-in">
                 <Image
                   src={videoData.thumbnail}
                   alt={`${videoData.title} 的縮圖`}
@@ -35,7 +35,7 @@ const VideoResult: React.FC<VideoResultProps> = ({ videoData, className }) => {
                   priority
                 />
                 {/* 時長標籤 */}
-                <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-sm px-2 py-1 rounded">
+                <div className="absolute bottom-2 right-2 bg-black/70 text-white text-sm px-2 py-1 rounded">
                   {videoData.duration}
                 </div>
               </div>
@@ -45,12 +45,12 @@ const VideoResult: React.FC<VideoResultProps> = ({ videoData, className }) => {
             <div className="lg:col-span-2 space-y-4">
               {/* 影片標題 */}
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 leading-tight mb-2">
+                <h3 className="text-xl font-semibold text-primary-200 leading-tight mb-2">
                   {videoData.title}
                 </h3>
-                <p className="text-gray-600 flex items-center">
+                <p className="text-gray-400 flex items-center">
                   <svg
-                    className="w-4 h-4 mr-2 text-gray-400"
+                    className="w-4 h-4 mr-2 text-gray-500"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     aria-hidden="true"
@@ -67,7 +67,7 @@ const VideoResult: React.FC<VideoResultProps> = ({ videoData, className }) => {
 
               {/* 最高畫質標章 */}
               <div className="flex items-center space-x-2">
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+                <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-900/50 text-primary-200 border border-primary-700/60">
                   <svg
                     className="w-4 h-4 mr-1"
                     fill="currentColor"
@@ -85,18 +85,18 @@ const VideoResult: React.FC<VideoResultProps> = ({ videoData, className }) => {
               </div>
 
               {/* 影片統計資訊 */}
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
                 <div className="text-center">
-                  <div className="text-2xl font-semibold text-gray-900">
+                  <div className="text-2xl font-semibold text-primary-200">
                     {videoData.availableQualities.length}
                   </div>
-                  <div className="text-sm text-gray-500">可用畫質</div>
+                  <div className="text-sm text-gray-400">可用畫質</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-semibold text-gray-900">
+                  <div className="text-2xl font-semibold text-primary-200">
                     {videoData.duration}
                   </div>
-                  <div className="text-sm text-gray-500">影片長度</div>
+                  <div className="text-sm text-gray-400">影片長度</div>
                 </div>
               </div>
             </div>

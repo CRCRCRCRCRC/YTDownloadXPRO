@@ -1,4 +1,10 @@
+import { Metadata } from 'next';
 import { MainLayout } from '@/components/layout';
+
+export const metadata: Metadata = {
+  title: '功能亮點',
+  description: '極速下載、智慧畫質、無廣告、即時進度、無障礙與免費開放。',
+};
 
 const FEATURES = [
   {
