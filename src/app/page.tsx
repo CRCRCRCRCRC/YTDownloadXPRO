@@ -1,6 +1,7 @@
 'use client';
 
 import { MainLayout } from '@/components/layout';
+import { HomeDownloadSection } from '@/components/HomeDownloadSection';
 
 export default function Home() {
   return (
@@ -20,20 +21,7 @@ export default function Home() {
         </section>
         {/* 下載區 */}
         <section className="mb-20 animate-slide-up">
-          <div className="bg-gradient-to-br from-gray-900/90 via-gray-800/80 to-primary-950/80 rounded-2xl shadow-2xl p-10 max-w-2xl mx-auto border border-white/10 backdrop-blur-xl flex flex-col gap-6">
-            <input
-              type="text"
-              placeholder="貼上 YouTube 影片網址..."
-              className="w-full px-6 py-4 rounded-xl bg-gray-800/80 text-lg text-gray-100 border border-gray-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 placeholder:text-gray-500 shadow-inner hover:scale-[1.01] focus:scale-[1.02] outline-none"
-              aria-label="YouTube 影片網址"
-            />
-            <button
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-primary-700 to-fuchsia-700 text-white font-bold text-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              aria-label="開始下載"
-            >
-              開始下載
-            </button>
-          </div>
+          <HomeDownloadSection />
         </section>
         {/* 功能亮點區 */}
         <section className="mb-20">

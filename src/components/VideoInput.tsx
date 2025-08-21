@@ -55,7 +55,7 @@ const VideoInput: React.FC<VideoInputProps> = ({ onCheck, loading = false }) => 
             placeholder="在此貼上 YouTube 影片網址"
             error={error || undefined}
             disabled={isLoading}
-            className="text-base sm:text-lg py-3 sm:py-4 px-4 sm:px-6 text-center transition-all duration-300 focus:scale-105"
+            className="text-lg sm:text-xl py-4 sm:py-5 px-5 sm:px-6 text-center transition-all duration-300 focus:scale-105 rounded-2xl"
             aria-label="YouTube 影片網址輸入框"
             aria-describedby="url-input-help"
             autoComplete="url"
@@ -66,7 +66,7 @@ const VideoInput: React.FC<VideoInputProps> = ({ onCheck, loading = false }) => 
             size="lg"
             loading={isLoading}
             disabled={!url.trim() || isLoading}
-            className="w-full sm:w-auto mx-auto block px-8 sm:px-12 py-3 sm:py-4 text-base sm:text-lg font-semibold min-h-[44px]"
+            className="w-full sm:w-auto mx-auto block px-10 sm:px-14 py-4 text-lg sm:text-xl font-semibold min-h-[52px] rounded-2xl"
           >
             {isLoading ? '檢查中...' : '檢查'}
           </Button>
