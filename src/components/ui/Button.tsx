@@ -13,10 +13,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-[0.97] relative overflow-hidden group';
     
     const variants = {
-      primary: 'text-white shadow-lg focus:ring-primary-400 bg-gradient-to-r from-primary-500 via-indigo-500 to-fuchsia-500 bg-size-200 bg-pos-0 hover:bg-pos-100 hover:shadow-xl hover:scale-[1.02] active:shadow-md',
-      secondary: 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 hover:from-gray-200 hover:to-gray-300 focus:ring-gray-500 shadow-sm hover:shadow-md hover:scale-[1.01]',
-      outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gradient-to-r hover:from-white hover:to-gray-50 focus:ring-primary-500 shadow-sm hover:shadow-md hover:border-gray-400 hover:scale-[1.01]',
-      ghost: 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 focus:ring-gray-500 hover:shadow-sm hover:scale-[1.01]',
+      primary: 'text-white shadow-lg focus:ring-primary-400 bg-gradient-to-r from-primary-700 via-indigo-800 to-fuchsia-700 bg-size-200 bg-pos-0 hover:bg-pos-100 hover:shadow-2xl hover:scale-[1.03] active:shadow-md dark:from-primary-600 dark:via-indigo-900 dark:to-fuchsia-800',
+      secondary: 'bg-gradient-to-r from-gray-800 to-gray-700 text-gray-100 hover:from-gray-700 hover:to-gray-600 focus:ring-gray-500 shadow-sm hover:shadow-lg hover:scale-[1.01] dark:from-gray-700 dark:to-gray-800',
+      outline: 'border border-gray-600 bg-transparent text-gray-200 hover:bg-gray-800/60 focus:ring-primary-500 shadow-sm hover:shadow-md hover:border-gray-400 hover:scale-[1.01]',
+      ghost: 'text-gray-300 hover:bg-gray-700/60 focus:ring-gray-500 hover:shadow-sm hover:scale-[1.01]',
     } as const;
     
     const sizes = {

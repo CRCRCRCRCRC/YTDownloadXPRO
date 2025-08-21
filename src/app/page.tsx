@@ -77,7 +77,7 @@ export default function Home() {
     switch (currentStep) {
       case 'input':
         return (
-          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 max-w-2xl mx-auto">
+          <div className="bg-gray-900/80 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-2xl mx-auto backdrop-blur-md border border-white/10 animate-fade-in">
             <VideoInput onCheck={(url) => handleVideoCheck(url)} loading={checkingLoading} />
           </div>
         );
@@ -148,21 +148,21 @@ export default function Home() {
       <MainLayout>
         <div className="text-center space-y-6 sm:space-y-8">
           <div className="space-y-3 sm:space-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight" role="banner">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg animate-fade-in" role="banner">
               YouTube 影片下載
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4 leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
               簡潔、高效的影片下載服務，支援多種畫質選擇，操作直覺零干擾
             </p>
           </div>
           
-          <main role="main" aria-label="主要內容">
+          <main role="main" aria-label="主要內容" className="animate-slide-up">
             {renderContent()}
           </main>
 
           {/* 錯誤顯示 */}
           {currentError && currentStep !== 'downloading' && currentStep !== 'completed' && (
-            <div className="max-w-2xl mx-auto px-4">
+            <div className="max-w-2xl mx-auto px-4 animate-fade-in">
               <ErrorMessage
                 message={currentError}
                 onRetry={currentStep !== 'input' ? handleReset : undefined}

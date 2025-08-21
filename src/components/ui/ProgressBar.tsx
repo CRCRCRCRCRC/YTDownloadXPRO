@@ -27,10 +27,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   };
   
   const variants = {
-    primary: 'bg-primary-600',
-    success: 'bg-success-500',
-    warning: 'bg-warning-500',
-    error: 'bg-error-500',
+    primary: 'bg-gradient-to-r from-primary-700 via-indigo-800 to-fuchsia-700',
+    success: 'bg-gradient-to-r from-green-600 to-green-400',
+    warning: 'bg-gradient-to-r from-yellow-600 to-yellow-400',
+    error: 'bg-gradient-to-r from-red-700 to-red-500',
   };
   
   return (
@@ -58,7 +58,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
       >
         <div
           className={cn(
-            'h-full transition-all duration-300 ease-out rounded-full',
+            'h-full transition-all duration-500 ease-out rounded-full shadow-lg',
             variants[variant]
           )}
           style={{ width: `${clampedValue}%` }}

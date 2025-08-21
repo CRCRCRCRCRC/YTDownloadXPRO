@@ -47,22 +47,22 @@ export default function FAQPage() {
     <MainLayout>
       <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg animate-fade-in">
             常見問題
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
             以下是使用者最常詢問的問題，希望能幫助您更好地使用我們的服務
           </p>
         </div>
 
         <div className="space-y-6">
           {faqs.map((faq, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow duration-200">
+            <Card key={index} className="hover:shadow-2xl transition-shadow duration-300 animate-slide-up">
               <CardContent className="p-6">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3">
+                <h2 className="text-lg sm:text-xl font-semibold text-primary-200 mb-3">
                   {faq.question}
                 </h2>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-300 leading-relaxed">
                   {faq.answer}
                 </p>
               </CardContent>
@@ -70,18 +70,18 @@ export default function FAQPage() {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <Card className="bg-blue-50 border-blue-200">
+        <div className="mt-12 text-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <Card className="bg-primary-900/80 border-primary-700">
             <CardContent className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              <h2 className="text-xl font-semibold text-primary-200 mb-2">
                 還有其他問題？
               </h2>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-300 mb-4">
                 如果您的問題沒有在上面找到答案，歡迎查看使用說明或稍後再試。
               </p>
               <a
                 href="/guide"
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-700 to-fuchsia-700 text-white rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
               >
                 查看使用說明
               </a>

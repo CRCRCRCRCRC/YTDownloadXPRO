@@ -112,20 +112,20 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
 
   const variants = {
     success: {
-      container: 'bg-success-50 border-success-200 text-success-800',
+      container: 'bg-success-900/80 border-success-700 text-success-200',
       icon: 'text-success-400',
     },
     error: {
-      container: 'bg-red-50 border-red-200 text-red-800',
-      icon: 'text-red-400',
+      container: 'bg-error-900/80 border-error-700 text-error-200',
+      icon: 'text-error-400',
     },
     warning: {
-      container: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-      icon: 'text-yellow-400',
+      container: 'bg-warning-900/80 border-warning-700 text-warning-200',
+      icon: 'text-warning-400',
     },
     info: {
-      container: 'bg-blue-50 border-blue-200 text-blue-800',
-      icon: 'text-blue-400',
+      container: 'bg-primary-900/80 border-primary-700 text-primary-200',
+      icon: 'text-primary-400',
     },
   };
 
