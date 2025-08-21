@@ -12,17 +12,17 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-gray-950/90 border-b border-white/10 sticky top-0 z-50 backdrop-blur-md shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo 和品牌名稱 */}
           <div className="flex items-center">
             <Link
               href="/"
-              className="flex items-center space-x-2 sm:space-x-3 text-lg sm:text-xl font-bold text-gray-900 hover:text-primary-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md p-1"
+              className="flex items-center space-x-2 sm:space-x-3 text-lg sm:text-xl font-bold text-primary-200 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md p-1"
               aria-label="YTDownloadXPRO 首頁"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary-700 to-fuchsia-700 rounded-lg flex items-center justify-center shadow-md">
                 <svg
                   className="w-5 h-5 text-white"
                   fill="currentColor"
@@ -37,16 +37,16 @@ const Header: React.FC = () => {
           </div>
 
           {/* 桌面版導覽 */}
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8" role="navigation" aria-label="主要導覽">
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8" role="navigation" aria-label="主導航">
             <Link
               href="/faq"
-              className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
+              className="text-primary-200 hover:text-white font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
             >
               常見問題
             </Link>
             <Link
               href="/guide"
-              className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
+              className="text-primary-200 hover:text-white font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
             >
               使用說明
             </Link>
@@ -55,7 +55,7 @@ const Header: React.FC = () => {
           {/* 行動版選單按鈕 */}
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors duration-200 min-h-[44px] min-w-[44px]"
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-primary-200 hover:text-white hover:bg-primary-800/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors duration-200 min-h-[44px] min-w-[44px]"
             aria-controls="mobile-menu"
             aria-expanded={isMobileMenuOpen}
             onClick={toggleMobileMenu}
@@ -106,17 +106,17 @@ const Header: React.FC = () => {
         )}
         id="mobile-menu"
       >
-        <nav className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200" role="navigation" aria-label="行動版導覽">
+        <nav className="px-2 pt-2 pb-3 space-y-1 bg-gray-950/90 border-t border-white/10" role="navigation" aria-label="行動版導航">
           <Link
             href="/faq"
-            className="block px-3 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
+            className="block px-3 py-3 text-base font-medium text-primary-200 hover:text-white hover:bg-primary-800/30 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             常見問題
           </Link>
           <Link
             href="/guide"
-            className="block px-3 py-3 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
+            className="block px-3 py-3 text-base font-medium text-primary-200 hover:text-white hover:bg-primary-800/30 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             使用說明
