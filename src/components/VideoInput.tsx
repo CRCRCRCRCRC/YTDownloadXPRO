@@ -48,28 +48,33 @@ const VideoInput: React.FC<VideoInputProps> = ({ onCheck, loading = false }) => 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* 主要輸入區域 */}
         <div className="space-y-4">
-          <Input
-            type="url"
-            value={url}
-            onChange={handleInputChange}
-            placeholder="在此貼上 YouTube 影片網址"
-            error={error || undefined}
-            disabled={isLoading}
-            className="text-lg sm:text-xl py-4 sm:py-5 px-5 sm:px-6 text-center transition-all duration-300 focus:scale-105 rounded-2xl"
-            aria-label="YouTube 影片網址輸入框"
-            aria-describedby="url-input-help"
-            autoComplete="url"
-          />
-          
-          <Button
-            type="submit"
-            size="lg"
-            loading={isLoading}
-            disabled={!url.trim() || isLoading}
-            className="w-full sm:w-auto mx-auto block px-10 sm:px-14 py-4 text-lg sm:text-xl font-semibold min-h-[52px] rounded-2xl"
-          >
-            {isLoading ? '檢查中...' : '檢查'}
-          </Button>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+            <div className="flex-1">
+              <Input
+                type="url"
+                value={url}
+                onChange={handleInputChange}
+                placeholder="在此貼上 YouTube 影片網址"
+                error={error || undefined}
+                disabled={isLoading}
+                className="text-lg sm:text-xl py-4 sm:py-5 px-5 sm:px-6 text-center sm:text-left transition-all duration-300 focus:scale-105 rounded-2xl w-full"
+                aria-label="YouTube 影片網址輸入框"
+                aria-describedby="url-input-help"
+                autoComplete="url"
+              />
+            </div>
+            <div className="mt-3 sm:mt-0">
+              <Button
+                type="submit"
+                size="lg"
+                loading={isLoading}
+                disabled={!url.trim() || isLoading}
+                className="w-full sm:w-auto px-8 sm:px-10 py-4 text-lg sm:text-xl font-semibold min-h-[52px] rounded-2xl"
+              >
+                {isLoading ? '檢查中...' : '檢查'}
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* 輔助說明 */}

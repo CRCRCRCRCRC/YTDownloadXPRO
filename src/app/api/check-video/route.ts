@@ -76,6 +76,34 @@ export async function POST(request: NextRequest) {
       }
 
       if (!info || !info.videoDetails) {
+        // 嘗試 oEmbed 作為後備，避免 500
+        try {
+          const oembedRes = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(canonicalUrl)}&format=json`, {
+            headers: {
+              'user-agent': 'Mozilla/5.0',
+            },
+          });
+          if (oembedRes.ok) {
+            const oembed = await oembedRes.json() as { title?: string; author_name?: string; thumbnail_url?: string; };
+            const videoData: VideoData = {
+              id: videoId,
+              title: oembed.title || 'YouTube 影片',
+              thumbnail: oembed.thumbnail_url || '',
+              duration: '—',
+              uploader: oembed.author_name || 'YouTube',
+              availableQualities: [
+                { resolution: '1080p', fileSize: '—', format: 'mp4' },
+                { resolution: '720p', fileSize: '—', format: 'mp4' },
+                { resolution: '480p', fileSize: '—', format: 'mp4' },
+              ],
+              maxQuality: '1080p',
+            };
+            return NextResponse.json<ApiResponse<VideoData>>({ success: true, data: videoData }, { status: 200, headers: corsHeaders });
+          }
+        } catch (e) {
+          console.warn('[check-video] oEmbed fallback failed', e);
+        }
+
         return NextResponse.json<ApiResponse<never>>({
           success: false,
           error: {
