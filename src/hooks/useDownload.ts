@@ -82,7 +82,7 @@ export function useDownload(): UseDownloadReturn {
 
     try {
       // 模擬進度更新
-      const cleanup = simulateProgress(() => {
+      simulateProgress(() => {
         // 進度完成後，實際呼叫下載 API
         downloadVideo(videoId, quality)
           .then(result => {

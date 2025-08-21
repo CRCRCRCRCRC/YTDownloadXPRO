@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       let info: ytdl.videoInfo | null = null;
       try {
         info = await ytdl.getInfo(canonicalUrl, { requestOptions });
-      } catch (e) {
+      } catch {
         // ignore and try with ID below
       }
       if ((!info || !info.videoDetails) && ytdl.validateID(videoId)) {

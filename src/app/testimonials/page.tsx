@@ -20,7 +20,7 @@ export default function TestimonialsPage() {
 					用戶見證
 				</h1>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-					{TESTIMONIALS.map((t, i) => (
+					{TESTIMONIALS.map((t) => (
 						<div key={t.name} className="rounded-2xl bg-gray-900/80 p-8 shadow-xl border border-white/10 animate-fade-in hover:scale-105 transition-transform duration-300">
 							<div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.color} mb-4 shadow-lg`} />
 							<p className="text-gray-200 leading-relaxed mb-4">“{t.quote}”</p>

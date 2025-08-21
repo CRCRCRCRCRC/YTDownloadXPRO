@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       let info: ytdl.videoInfo | null = null;
       try {
         info = await ytdl.getInfo(videoUrl, { requestOptions });
-      } catch (e) {
+      } catch {
         // ignore and try with ID
       }
       if ((!info || !info.videoDetails) && ytdl.validateID(videoId)) {

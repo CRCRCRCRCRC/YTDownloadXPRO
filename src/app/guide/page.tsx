@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { MainLayout } from '@/components/layout';
-import { Card, CardContent } from '@/components/ui/Card';
 
 export const metadata: Metadata = {
   title: '使用教學',

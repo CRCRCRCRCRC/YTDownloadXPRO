@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { MainLayout } from '@/components/layout';
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function AboutPage() {
 						<p className="text-gray-300">有任何建議或合作意向，歡迎來信：<a href="mailto:support@ytdownloadxpro.com" className="underline hover:text-primary-300">support@ytdownloadxpro.com</a></p>
 					</section>
 					<div className="text-center animate-fade-in">
-						<a href="/" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-700 to-fuchsia-700 text-white rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">開始使用</a>
+						<Link href="/" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-700 to-fuchsia-700 text-white rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">開始使用</Link>
 					</div>
 				</div>
 			</div>
