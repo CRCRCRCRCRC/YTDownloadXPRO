@@ -4,6 +4,16 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
+const NAV_LINKS = [
+  { href: '/', label: '首頁' },
+  { href: '/features', label: '功能亮點' },
+  { href: '/guide', label: '教學' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/testimonials', label: '見證' },
+  { href: '/status', label: '系統狀態' },
+  { href: '/about', label: '關於我們' },
+];
+
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -15,7 +25,7 @@ const Header: React.FC = () => {
     <header className="bg-gray-950/90 border-b border-white/10 sticky top-0 z-50 backdrop-blur-md shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo 和品牌名稱 */}
+          {/* Logo 與品牌名稱 */}
           <div className="flex items-center">
             <Link
               href="/"
@@ -36,20 +46,17 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* 桌面版導覽 */}
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8" role="navigation" aria-label="主導航">
-            <Link
-              href="/faq"
-              className="text-primary-200 hover:text-white font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
-            >
-              常見問題
-            </Link>
-            <Link
-              href="/guide"
-              className="text-primary-200 hover:text-white font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
-            >
-              使用說明
-            </Link>
+          {/* 桌面版導覽列 */}
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6" role="navigation" aria-label="主導航">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-primary-200 hover:text-white font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-md px-2 py-1 min-h-[44px] flex items-center"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* 行動版選單按鈕 */}
@@ -97,30 +104,25 @@ const Header: React.FC = () => {
           </button>
         </div>
       </div>
-
       {/* 行動版選單 */}
       <div
         className={cn(
           'md:hidden transition-all duration-300 ease-in-out overflow-hidden',
-          isMobileMenuOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
         )}
         id="mobile-menu"
       >
         <nav className="px-2 pt-2 pb-3 space-y-1 bg-gray-950/90 border-t border-white/10" role="navigation" aria-label="行動版導航">
-          <Link
-            href="/faq"
-            className="block px-3 py-3 text-base font-medium text-primary-200 hover:text-white hover:bg-primary-800/30 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            常見問題
-          </Link>
-          <Link
-            href="/guide"
-            className="block px-3 py-3 text-base font-medium text-primary-200 hover:text-white hover:bg-primary-800/30 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            使用說明
-          </Link>
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block px-3 py-3 text-base font-medium text-primary-200 hover:text-white hover:bg-primary-800/30 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 min-h-[44px] flex items-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

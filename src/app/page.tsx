@@ -1,177 +1,91 @@
 'use client';
 
 import { MainLayout } from '@/components/layout';
-import { VideoInput } from '@/components/VideoInput';
-import { VideoResult } from '@/components/VideoResult';
-import { QualitySelector } from '@/components/QualitySelector';
-import { DownloadProgress } from '@/components/DownloadProgress';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { Card, CardContent } from '@/components/ui/Card';
-import { VideoResultSkeleton, QualitySelectorSkeleton } from '@/components/ui/Skeleton';
-import { ErrorMessage } from '@/components/ui/ErrorMessage';
-import { useVideoCheck } from '@/hooks/useVideoCheck';
-import { useDownload } from '@/hooks/useDownload';
-import { useToast } from '@/components/ui/Toast';
-import type { QualityOption } from '@/types';
 
 export default function Home() {
-  const { addToast } = useToast();
-  
-  const {
-    currentStep,
-    videoData,
-    loading: checkingLoading,
-    error: checkError,
-    handleVideoCheck,
-    handleQualitySelect,
-    reset: resetCheck,
-    setStep,
-  } = useVideoCheck();
-
-  const {
-    isDownloading,
-    progress,
-    status,
-    downloadUrl,
-    filename,
-    error: downloadError,
-    startDownload,
-    reset: resetDownload,
-  } = useDownload();
-
-  const handleDownload = async (quality: QualityOption) => {
-    if (!videoData) return;
-    
-    setStep('downloading');
-    
-    try {
-      await startDownload(videoData.id, quality.resolution);
-      
-      // 如果下載成功，切換到完成狀態並顯示成功通知
-      if (!downloadError) {
-        setStep('completed');
-        addToast({
-          type: 'success',
-          title: '下載準備完成',
-          message: '您的影片已準備好下載！',
-          duration: 4000,
-        });
-      }
-    } catch {
-      // 下載失敗時顯示錯誤通知
-      addToast({
-        type: 'error',
-        title: '下載失敗',
-        message: '無法準備下載，請稍後再試',
-        duration: 5000,
-      });
-    }
-  };
-
-  const handleReset = () => {
-    resetCheck();
-    resetDownload();
-  };
-
-  const renderContent = () => {
-    switch (currentStep) {
-      case 'input':
-        return (
-          <div className="bg-gray-900/80 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-2xl mx-auto backdrop-blur-md border border-white/10 animate-fade-in">
-            <VideoInput onCheck={(url) => handleVideoCheck(url)} loading={checkingLoading} />
-          </div>
-        );
-
-      case 'checking':
-        return (
-          <div className="space-y-4 sm:space-y-6 max-w-5xl mx-auto">
-            <Card>
-              <CardContent className="p-4 sm:p-6">
-                <VideoResultSkeleton />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 sm:p-6">
-                <QualitySelectorSkeleton />
-              </CardContent>
-            </Card>
-          </div>
-        );
-
-      case 'result':
-        return (
-          <div className="space-y-4 sm:space-y-6 max-w-5xl mx-auto animate-fade-in">
-            {videoData && (
-              <>
-                <div className="animate-slide-up">
-                  <VideoResult videoData={videoData} />
-                </div>
-                <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                  <QualitySelector
-                    availableQualities={videoData.availableQualities}
-                    maxQuality={videoData.maxQuality}
-                    onQualitySelect={handleQualitySelect}
-                    onDownload={handleDownload}
-                    loading={isDownloading}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-        );
-
-      case 'downloading':
-      case 'completed':
-        return (
-          <div className="max-w-2xl mx-auto animate-fade-in">
-            <div className={status === 'completed' ? 'animate-bounce-gentle' : ''}>
-              <DownloadProgress
-                progress={progress}
-                status={status}
-                filename={filename || undefined}
-                downloadUrl={downloadUrl || undefined}
-                onReset={handleReset}
-              />
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const currentError = checkError || downloadError;
-
   return (
-    <ErrorBoundary>
-      <MainLayout>
-        <div className="text-center space-y-6 sm:space-y-8">
-          <div className="space-y-3 sm:space-y-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg animate-fade-in" role="banner">
-              YouTube 影片下載
+    <MainLayout>
+      <div className="max-w-6xl mx-auto py-12 px-4">
+        {/* 品牌主視覺區 */}
+        <section className="relative text-center mb-20">
+          <div className="absolute inset-0 -z-10 animate-pulse bg-gradient-to-br from-primary-900/60 via-fuchsia-900/40 to-indigo-900/60 blur-2xl rounded-3xl" />
+          <div className="relative inline-block px-8 py-12 rounded-3xl shadow-2xl bg-gray-900/80 border border-white/10 backdrop-blur-xl animate-fade-in">
+            <h1 className="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-2xl mb-4 animate-shimmer" aria-label="YTDownloadXPRO">
+              YTDownloadXPRO
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4 leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              簡潔、高效的影片下載服務，支援多種畫質選擇，操作直覺零干擾
+            <p className="text-2xl sm:text-3xl text-gray-200 mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              最精美、最絲滑的 YouTube 影片下載服務
             </p>
           </div>
-          
-          <main role="main" aria-label="主要內容" className="animate-slide-up">
-            {renderContent()}
-          </main>
-
-          {/* 錯誤顯示 */}
-          {currentError && currentStep !== 'downloading' && currentStep !== 'completed' && (
-            <div className="max-w-2xl mx-auto px-4 animate-fade-in">
-              <ErrorMessage
-                message={currentError}
-                onRetry={currentStep !== 'input' ? handleReset : undefined}
-                variant="error"
-              />
-            </div>
-          )}
-        </div>
-      </MainLayout>
-    </ErrorBoundary>
+        </section>
+        {/* 下載區 */}
+        <section className="mb-20 animate-slide-up">
+          <div className="bg-gradient-to-br from-gray-900/90 via-gray-800/80 to-primary-950/80 rounded-2xl shadow-2xl p-10 max-w-2xl mx-auto border border-white/10 backdrop-blur-xl flex flex-col gap-6">
+            <input
+              type="text"
+              placeholder="貼上 YouTube 影片網址..."
+              className="w-full px-6 py-4 rounded-xl bg-gray-800/80 text-lg text-gray-100 border border-gray-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 placeholder:text-gray-500 shadow-inner hover:scale-[1.01] focus:scale-[1.02] outline-none"
+              aria-label="YouTube 影片網址"
+            />
+            <button
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-primary-700 to-fuchsia-700 text-white font-bold text-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              aria-label="開始下載"
+            >
+              開始下載
+            </button>
+          </div>
+        </section>
+        {/* 功能亮點區 */}
+        <section className="mb-20">
+          <h2 className="text-2xl font-bold text-primary-200 mb-10 text-center animate-fade-in">功能亮點</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {[1,2,3,4].map((i) => (
+              <div key={i} className="rounded-2xl bg-gray-900/80 p-8 shadow-xl border border-white/10 flex flex-col items-center gap-4 animate-slide-in-left hover:scale-105 transition-transform duration-300">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-700 to-fuchsia-700 flex items-center justify-center mb-2 shadow-lg animate-pulse" />
+                <div className="h-5 w-32 bg-gray-800/60 rounded mb-2 animate-shimmer" />
+                <div className="h-4 w-48 bg-gray-800/40 rounded animate-shimmer" />
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* 操作流程區 */}
+        <section className="mb-20">
+          <h2 className="text-2xl font-bold text-primary-200 mb-10 text-center animate-fade-in">操作流程</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[1,2,3,4].map((i) => (
+              <div key={i} className="rounded-2xl bg-gray-900/80 p-6 shadow-lg border border-white/10 flex flex-col items-center gap-3 animate-slide-up hover:scale-105 transition-transform duration-300">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-700 to-fuchsia-700 flex items-center justify-center text-white font-bold text-lg shadow-md animate-bounce-gentle">{i}</div>
+                <div className="h-4 w-24 bg-gray-800/60 rounded animate-shimmer" />
+                <div className="h-3 w-32 bg-gray-800/40 rounded animate-shimmer" />
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* 用戶見證區 */}
+        <section className="mb-20">
+          <h2 className="text-2xl font-bold text-primary-200 mb-10 text-center animate-fade-in">用戶見證</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {[1,2].map((i) => (
+              <div key={i} className="rounded-2xl bg-gray-900/80 p-8 shadow-xl border border-white/10 animate-fade-in hover:scale-105 transition-transform duration-300">
+                <div className="h-5 w-32 bg-gray-800/60 rounded mb-2 animate-shimmer" />
+                <div className="h-4 w-48 bg-gray-800/40 rounded animate-shimmer" />
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* FAQ 精選區 */}
+        <section className="mb-20">
+          <h2 className="text-2xl font-bold text-primary-200 mb-10 text-center animate-fade-in">常見問題精選</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {[1,2].map((i) => (
+              <div key={i} className="rounded-2xl bg-gray-900/80 p-6 shadow-lg border border-white/10 animate-fade-in hover:scale-105 transition-transform duration-300">
+                <div className="h-4 w-32 bg-gray-800/60 rounded mb-2 animate-shimmer" />
+                <div className="h-3 w-48 bg-gray-800/40 rounded animate-shimmer" />
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </MainLayout>
   );
 }

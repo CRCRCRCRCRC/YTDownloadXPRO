@@ -47,50 +47,15 @@ export default async function StatusPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-primary-950 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg animate-fade-in mb-2">
-            系統狀態
-          </h1>
-          <p className="text-gray-300 animate-fade-in">
-            即時監控服務狀態和可用性
-          </p>
-        </div>
-
-        <div className="bg-gray-900/80 rounded-lg shadow-2xl p-6 mb-6 border border-white/10 animate-slide-up">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-primary-200">
-              服務狀態
-            </h2>
-            <div className="text-sm text-gray-400">
-              最後更新: {new Date(status.lastUpdated).toLocaleString('zh-TW')}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 border rounded-lg border-white/10 bg-gray-800/60">
-              <div>
-                <h3 className="font-medium text-primary-200">API 服務</h3>
-                <p className="text-sm text-gray-400">影片檢查和下載 API</p>
-              </div>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(status.api)}`}>{getStatusText(status.api)}</span>
-            </div>
-            <div className="flex items-center justify-between p-4 border rounded-lg border-white/10 bg-gray-800/60">
-              <div>
-                <h3 className="font-medium text-primary-200">資料庫</h3>
-                <p className="text-sm text-gray-400">資料儲存服務</p>
-              </div>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(status.database)}`}>{getStatusText(status.database)}</span>
-            </div>
-            <div className="flex items-center justify-between p-4 border rounded-lg border-white/10 bg-gray-800/60">
-              <div>
-                <h3 className="font-medium text-primary-200">CDN</h3>
-                <p className="text-sm text-gray-400">內容分發網路</p>
-              </div>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(status.cdn)}`}>{getStatusText(status.cdn)}</span>
-            </div>
-          </div>
-        </div>
+      <div className="max-w-4xl mx-auto py-12 px-4">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg mb-8 text-center">
+          系統狀態
+        </h1>
+        {/* 即時狀態區塊（預留） */}
+        <div className="bg-gray-900/80 rounded-xl shadow-lg border border-white/10 p-8 mb-8 animate-fade-in min-h-[120px]" />
+        {/* 歷史查詢區塊（預留） */}
+        <div className="bg-gray-900/80 rounded-xl shadow-lg border border-white/10 p-8 animate-fade-in min-h-[120px]" />
+      </div>
 
         <div className="bg-gray-900/80 rounded-lg shadow-2xl p-6 border border-white/10 animate-fade-in">
           <h2 className="text-xl font-semibold text-primary-200 mb-4">系統資訊</h2>

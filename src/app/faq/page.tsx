@@ -45,48 +45,16 @@ const faqs = [
 export default function FAQPage() {
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
-        <div className="text-center mb-8 sm:mb-12">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg animate-fade-in">
-            常見問題
-          </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            以下是使用者最常詢問的問題，希望能幫助您更好地使用我們的服務
-          </p>
-        </div>
-
-        <div className="space-y-6">
-          {faqs.map((faq, index) => (
-            <Card key={index} className="hover:shadow-2xl transition-shadow duration-300 animate-slide-up">
-              <CardContent className="p-6">
-                <h2 className="text-lg sm:text-xl font-semibold text-primary-200 mb-3">
-                  {faq.question}
-                </h2>
-                <p className="text-gray-300 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="mt-12 text-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          <Card className="bg-primary-900/80 border-primary-700">
-            <CardContent className="p-6">
-              <h2 className="text-xl font-semibold text-primary-200 mb-2">
-                還有其他問題？
-              </h2>
-              <p className="text-gray-300 mb-4">
-                如果您的問題沒有在上面找到答案，歡迎查看使用說明或稍後再試。
-              </p>
-              <a
-                href="/guide"
-                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary-700 to-fuchsia-700 text-white rounded-lg hover:scale-105 hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-              >
-                查看使用說明
-              </a>
-            </CardContent>
-          </Card>
+      <div className="max-w-5xl mx-auto py-12 px-4">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-fuchsia-400 to-indigo-400 drop-shadow-lg mb-8 text-center">
+          常見問題
+        </h1>
+        {/* 搜尋與分類區塊（預留） */}
+        <div className="bg-gray-900/80 rounded-xl shadow-lg border border-white/10 p-6 mb-8 animate-fade-in min-h-[80px]" />
+        {/* FAQ 區塊（預留） */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="rounded-xl bg-gray-900/80 p-6 shadow-lg border border-white/10 min-h-[120px] animate-fade-in" />
+          <div className="rounded-xl bg-gray-900/80 p-6 shadow-lg border border-white/10 min-h-[120px] animate-fade-in" />
         </div>
       </div>
     </MainLayout>
