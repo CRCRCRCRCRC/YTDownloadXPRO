@@ -51,7 +51,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         {/* 背景軌道 */}
         <div
           className={cn(
-            'w-full bg-gradient-to-r from-slate-700/50 via-gray-700/50 to-slate-700/50 rounded-full overflow-hidden backdrop-blur-sm border border-white/10',
+            'w-full bg-gradient-to-r from-slate-600/60 via-gray-600/60 to-slate-600/60 rounded-full overflow-hidden backdrop-blur-sm border border-white/20',
             sizes[size]
           )}
           role="progressbar"

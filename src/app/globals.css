@@ -76,10 +76,10 @@ body {
   line-height: 1.5;
   color: var(--color-gray-50);
   background:
-    radial-gradient(ellipse at top, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom left, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f1629 50%, #1e293b 75%, #0f172a 100%);
+    radial-gradient(ellipse at top, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #1e293b 0%, #334155 25%, #1e293b 50%, #334155 75%, #1e293b 100%);
   background-size: 200% 200%, 150% 150%, 150% 150%, 300% 300%;
   background-position: 0% 50%, 20% 80%, 80% 80%, 0% 50%;
   animation: backgroundShift 20s ease infinite;

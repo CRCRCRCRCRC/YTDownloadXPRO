@@ -44,15 +44,15 @@ const VideoInput: React.FC<VideoInputProps> = ({ onCheck, loading = false }) => 
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* 主要輸入區域 - 超級精美設計 */}
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-            {/* 輸入框容器 */}
+    <div className="w-full max-w-4xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-10">
+        {/* 主要輸入區域 - 加大設計 */}
+        <div className="space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6">
+            {/* 輸入框容器 - 加大 */}
             <div className="flex-1 relative group">
               {/* 輸入框背景光暈 */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl blur-lg opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/15 via-purple-500/15 to-pink-500/15 rounded-3xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
 
               <Input
                 type="url"
@@ -61,37 +61,37 @@ const VideoInput: React.FC<VideoInputProps> = ({ onCheck, loading = false }) => 
                 placeholder="在此貼上 YouTube 影片網址"
                 error={error || undefined}
                 disabled={isLoading}
-                className="relative text-lg sm:text-xl py-5 sm:py-6 px-6 sm:px-8 text-center sm:text-left transition-all duration-500 focus:scale-[1.02] hover:scale-[1.01] rounded-2xl w-full bg-gradient-to-r from-slate-800/80 via-gray-800/80 to-slate-800/80 border border-white/20 focus:border-blue-400/50 backdrop-blur-sm shadow-lg hover:shadow-xl focus:shadow-2xl"
+                className="relative text-xl sm:text-2xl py-6 sm:py-8 px-8 sm:px-10 text-center sm:text-left transition-all duration-500 focus:scale-[1.02] hover:scale-[1.01] rounded-3xl w-full bg-gradient-to-r from-slate-600/60 via-gray-600/60 to-slate-600/60 border border-white/40 focus:border-blue-400/70 backdrop-blur-sm shadow-xl hover:shadow-2xl focus:shadow-3xl"
                 aria-label="YouTube 影片網址輸入框"
                 aria-describedby="url-input-help"
                 autoComplete="url"
               />
             </div>
 
-            {/* 按鈕容器 */}
-            <div className="mt-4 sm:mt-0 relative group">
+            {/* 按鈕容器 - 加大 */}
+            <div className="mt-6 sm:mt-0 relative group">
               {/* 按鈕光暈效果 */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-glow" />
+              <div className="absolute -inset-3 bg-gradient-to-r from-blue-500/25 via-purple-500/25 to-pink-500/25 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-glow" />
 
               <Button
                 type="submit"
                 size="lg"
                 loading={isLoading}
                 disabled={!url.trim() || isLoading}
-                className="relative w-full sm:w-auto px-10 sm:px-12 py-5 text-lg sm:text-xl font-semibold min-h-[60px] rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 shadow-lg hover:shadow-2xl transform hover:scale-105 active:scale-95"
+                className="relative w-full sm:w-auto px-12 sm:px-16 py-6 text-xl sm:text-2xl font-semibold min-h-[70px] rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 shadow-xl hover:shadow-3xl transform hover:scale-105 active:scale-95"
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-3">
                   {isLoading ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      檢查中...
+                      <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span className="text-xl">檢查中...</span>
                     </>
                   ) : (
                     <>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
-                      檢查
+                      <span className="text-xl">檢查</span>
                     </>
                   )}
                 </span>
@@ -100,15 +100,11 @@ const VideoInput: React.FC<VideoInputProps> = ({ onCheck, loading = false }) => 
           </div>
         </div>
 
-        {/* 輔助說明 - 優雅的設計 */}
-        <div className="text-center px-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
-            <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse" />
-            <p id="url-input-help" className="text-sm text-gray-400 font-light">
-              目前僅支援單一影片，不支援播放清單
-            </p>
-            <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse" />
-          </div>
+        {/* 輔助說明 - 簡化 */}
+        <div className="text-center px-8">
+          <p id="url-input-help" className="text-base text-gray-300 font-light">
+            目前僅支援單一影片，不支援播放清單
+          </p>
         </div>
       </form>
     </div>
