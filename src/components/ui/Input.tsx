@@ -24,10 +24,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           id={inputId}
           className={cn(
-            'w-full px-6 py-4 text-base border rounded-xl transition-all duration-300',
+            'w-full px-5 py-3 text-base border rounded-lg transition-colors duration-200',
             'placeholder:text-gray-400 placeholder:font-light',
             'focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400/50',
-            'hover:shadow-lg hover:shadow-blue-500/10',
             error
               ? 'border-red-500/50 bg-red-950/30 text-red-200 placeholder:text-red-400'
               : 'border-white/30 bg-gradient-to-r from-slate-600/50 via-gray-600/50 to-slate-600/50 text-gray-100 hover:border-white/40 focus:from-slate-500/60 focus:via-gray-500/60 focus:to-slate-500/60',
