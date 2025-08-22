@@ -69,10 +69,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             style={{ width: `${clampedValue}%` }}
           >
             {/* 動態光澤效果 */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
             {/* 脈動效果 */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse-gentle rounded-full" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
           </div>
         </div>
 

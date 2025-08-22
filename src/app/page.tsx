@@ -12,7 +12,7 @@ export default function Home() {
           {/* 品牌標識 */}
           <div className="space-y-6 animate-fade-in">
             <h1 className="text-7xl md:text-9xl font-black tracking-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-gradient">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
                 YTD
               </span>
               <span className="text-white">X</span>

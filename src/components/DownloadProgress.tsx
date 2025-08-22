@@ -43,10 +43,10 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
       return (
         <div className="relative group">
           {/* 成功圖示背景光暈 */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400/20 via-green-400/20 to-emerald-400/20 rounded-full blur-xl animate-glow opacity-60" />
+          <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400/20 via-green-400/20 to-emerald-400/20 rounded-full blur-xl opacity-60" />
 
           {/* 主要圖示 */}
-          <div className="relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center shadow-2xl animate-levitate">
+          <div className="relative w-20 h-20 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full flex items-center justify-center shadow-2xl">
             <svg
               className="w-10 h-10 text-white"
               fill="currentColor"
@@ -67,10 +67,10 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
     return (
       <div className="relative group">
         {/* 載入中背景光暈 */}
-        <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-full blur-xl animate-glow opacity-60" />
+        <div className="absolute -inset-4 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-full blur-xl opacity-60" />
 
         {/* 主要圖示 */}
-        <div className="relative w-20 h-20 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl animate-liquid">
+        <div className="relative w-20 h-20 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl">
           <svg
             className="w-10 h-10 text-white"
             fill="none"
@@ -156,7 +156,7 @@ const DownloadProgress: React.FC<DownloadProgressProps> = ({
               <div className="space-y-4">
                 {/* 下載按鈕 */}
                 <div className="relative group">
-                  <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400/20 via-green-400/20 to-emerald-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-glow" />
+                  <div className="absolute -inset-2 bg-gradient-to-r from-emerald-400/20 via-green-400/20 to-emerald-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <Button
                     onClick={handleDownload}
                     size="lg"
