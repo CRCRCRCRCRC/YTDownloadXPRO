@@ -24,13 +24,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           id={inputId}
           className={cn(
-            'w-full px-4 py-3 text-base border rounded-lg transition-colors duration-200',
-            'placeholder:text-gray-500',
-            'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
+            'w-full px-6 py-5 text-base border rounded-2xl transition-all duration-300',
+            'placeholder:text-gray-400 placeholder:font-light',
+            'focus:outline-none focus:ring-2 focus:ring-blue-400/30 focus:border-blue-400/50',
+            'hover:shadow-lg hover:shadow-blue-500/10',
             error
-              ? 'border-error-500 bg-error-900/30 text-error-200'
-              : 'border-gray-700 bg-gray-900/80 text-gray-100 hover:border-gray-500',
-            props.disabled && 'opacity-50 cursor-not-allowed bg-gray-800/60',
+              ? 'border-red-500/50 bg-red-950/30 text-red-200 placeholder:text-red-400'
+              : 'border-white/20 bg-gradient-to-r from-slate-800/60 via-gray-800/60 to-slate-800/60 text-gray-100 hover:border-white/30 focus:from-slate-700/80 focus:via-gray-700/80 focus:to-slate-700/80',
+            props.disabled && 'opacity-50 cursor-not-allowed bg-gray-800/40',
             className
           )}
           ref={ref}

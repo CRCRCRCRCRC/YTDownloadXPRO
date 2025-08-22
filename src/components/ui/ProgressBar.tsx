@@ -36,33 +36,55 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div className={cn('w-full', className)}>
       {(label || showPercentage) && (
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-center mb-3">
           {label && (
-            <span className="text-sm font-medium text-gray-700">{label}</span>
+            <span className="text-sm font-medium text-gray-300">{label}</span>
           )}
           {showPercentage && (
-            <span className="text-sm text-gray-500">{Math.round(clampedValue)}%</span>
+            <span className="text-sm text-gray-400 font-light">{Math.round(clampedValue)}%</span>
           )}
         </div>
       )}
-      <div
-        className={cn(
-          'w-full bg-gray-200 rounded-full overflow-hidden',
-          sizes[size]
-        )}
-        role="progressbar"
-        aria-valuenow={clampedValue}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label={label || `進度 ${Math.round(clampedValue)}%`}
-      >
+
+      {/* 進度條容器 */}
+      <div className="relative">
+        {/* 背景軌道 */}
         <div
           className={cn(
-            'h-full transition-all duration-500 ease-out rounded-full shadow-lg',
-            variants[variant]
+            'w-full bg-gradient-to-r from-slate-700/50 via-gray-700/50 to-slate-700/50 rounded-full overflow-hidden backdrop-blur-sm border border-white/10',
+            sizes[size]
           )}
-          style={{ width: `${clampedValue}%` }}
-        />
+          role="progressbar"
+          aria-valuenow={clampedValue}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={label || `進度 ${Math.round(clampedValue)}%`}
+        >
+          {/* 進度條 */}
+          <div
+            className={cn(
+              'h-full transition-all duration-700 ease-out rounded-full shadow-lg relative overflow-hidden',
+              variants[variant]
+            )}
+            style={{ width: `${clampedValue}%` }}
+          >
+            {/* 動態光澤效果 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+
+            {/* 脈動效果 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse-gentle rounded-full" />
+          </div>
+        </div>
+
+        {/* 進度指示器 */}
+        {clampedValue > 0 && clampedValue < 100 && (
+          <div
+            className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 transition-all duration-700 ease-out"
+            style={{ left: `${clampedValue}%` }}
+          >
+            <div className="w-3 h-3 bg-white rounded-full shadow-lg animate-pulse border-2 border-gray-800" />
+          </div>
+        )}
       </div>
     </div>
   );

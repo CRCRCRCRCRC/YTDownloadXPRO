@@ -75,7 +75,14 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-gray-50);
-  background: linear-gradient(120deg, #181c24 0%, #23272f 100%);
+  background:
+    radial-gradient(ellipse at top, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(147, 51, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f1629 50%, #1e293b 75%, #0f172a 100%);
+  background-size: 200% 200%, 150% 150%, 150% 150%, 300% 300%;
+  background-position: 0% 50%, 20% 80%, 80% 80%, 0% 50%;
+  animation: backgroundShift 20s ease infinite;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -191,11 +198,11 @@ input, textarea {
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .animate-slide-up {
-    animation: slideUp 0.5s ease-out;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .animate-bounce-gentle {
@@ -218,6 +225,62 @@ input, textarea {
     animation: pulseGentle 2s ease-in-out infinite;
   }
 
+  /* 新增超級流暢動畫 */
+  .animate-gradient {
+    animation: gradientShift 8s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-levitate {
+    animation: levitate 6s ease-in-out infinite;
+  }
+
+  .animate-morph {
+    animation: morph 3s ease-in-out infinite;
+  }
+
+  .animate-liquid {
+    animation: liquid 4s ease-in-out infinite;
+  }
+
+  /* 響應式動畫優化 */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-gradient,
+    .animate-glow,
+    .animate-levitate,
+    .animate-morph,
+    .animate-liquid,
+    .animate-shimmer,
+    .animate-pulse-gentle,
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-bounce-gentle,
+    .animate-slide-in-left,
+    .animate-slide-in-right,
+    .animate-float {
+      animation: none;
+    }
+  }
+
+  /* 移動設備優化 */
+  @media (max-width: 768px) {
+    .animate-levitate {
+      animation-duration: 8s;
+    }
+
+    .animate-liquid {
+      animation-duration: 6s;
+    }
+
+    .animate-glow {
+      animation-duration: 3s;
+    }
+  }
+
   .scale-101 {
     transform: scale(1.01);
   }
@@ -232,6 +295,30 @@ input, textarea {
 
   .scale-95 {
     transform: scale(0.95);
+  }
+
+  /* 效能優化 */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* 圖層優化 */
+  .layer-optimized {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+  }
+
+  /* 字體渲染優化 */
+  .text-optimized {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
@@ -317,5 +404,84 @@ input, textarea {
   }
   90% {
     transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* 新增超級流暢動畫關鍵幀 */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 5px rgba(147, 51, 234, 0.3));
+  }
+  to {
+    filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.8));
+  }
+}
+
+@keyframes levitate {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes morph {
+  0%, 100% {
+    border-radius: 50% 50% 50% 50%;
+  }
+  25% {
+    border-radius: 60% 40% 40% 60%;
+  }
+  50% {
+    border-radius: 40% 60% 60% 40%;
+  }
+  75% {
+    border-radius: 60% 40% 40% 60%;
+  }
+}
+
+@keyframes liquid {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    transform: scale(1.05) rotate(1deg);
+  }
+  66% {
+    transform: scale(0.95) rotate(-1deg);
+  }
+}
+
+@keyframes backgroundShift {
+  0%, 100% {
+    background-position: 0% 50%, 20% 80%, 80% 80%, 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%, 40% 60%, 60% 100%, 100% 50%;
+  }
+  50% {
+    background-position: 100% 50%, 80% 80%, 20% 60%, 50% 100%;
+  }
+  75% {
+    background-position: 0% 50%, 60% 100%, 40% 20%, 100% 50%;
   }
 }

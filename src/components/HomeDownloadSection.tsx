@@ -78,61 +78,100 @@ export function HomeDownloadSection() {
     switch (currentStep) {
       case 'input':
         return (
-          <div className="bg-gray-900/80 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-2xl mx-auto backdrop-blur-md border border-white/10 animate-fade-in">
-            <VideoInput onCheck={(url) => handleVideoCheck(url)} loading={checkingLoading} />
+          <div className="max-w-2xl mx-auto">
+            {/* 超級精美的輸入區域 */}
+            <div className="relative group">
+              {/* 動態背景光暈 */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-xl animate-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* 主要容器 */}
+              <div className="relative bg-gradient-to-br from-slate-900/90 via-gray-900/90 to-slate-800/90 rounded-2xl p-8 backdrop-blur-xl border border-white/10 shadow-2xl animate-fade-in">
+                {/* 裝飾性元素 */}
+                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse" />
+                <div className="absolute bottom-4 left-4 w-1 h-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse" />
+
+                {/* 輸入組件 */}
+                <div className="animate-levitate">
+                  <VideoInput onCheck={(url) => handleVideoCheck(url)} loading={checkingLoading} />
+                </div>
+              </div>
+            </div>
           </div>
         );
 
       case 'checking':
         return (
-          <div className="space-y-4 sm:space-y-6 max-w-5xl mx-auto">
-            <Card>
-              <CardContent className="p-4 sm:p-6">
-                <VideoResultSkeleton />
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 sm:p-6">
-                <QualitySelectorSkeleton />
-              </CardContent>
-            </Card>
+          <div className="max-w-4xl mx-auto">
+            {/* 流暢的載入狀態 */}
+            <div className="space-y-6 animate-fade-in">
+              {/* 影片資訊骨架 */}
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-lg animate-glow" />
+                <div className="relative bg-gradient-to-br from-slate-900/90 via-gray-900/90 to-slate-800/90 rounded-2xl p-6 backdrop-blur-xl border border-white/10 shadow-xl animate-liquid">
+                  <VideoResultSkeleton />
+                </div>
+              </div>
+
+              {/* 品質選擇骨架 */}
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10 rounded-3xl blur-lg animate-glow" />
+                <div className="relative bg-gradient-to-br from-slate-900/90 via-gray-900/90 to-slate-800/90 rounded-2xl p-6 backdrop-blur-xl border border-white/10 shadow-xl animate-morph">
+                  <QualitySelectorSkeleton />
+                </div>
+              </div>
+            </div>
           </div>
         );
 
       case 'result':
         return (
-          <div className="space-y-6 max-w-5xl mx-auto animate-fade-in">
-            {videoData && (
-              <>
-                <div className="animate-slide-up">
-                  <VideoResult videoData={videoData} />
-                </div>
-                <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                  <QualitySelector
-                    availableQualities={videoData.availableQualities}
-                    maxQuality={videoData.maxQuality}
-                    onQualitySelect={handleQualitySelect}
-                    onDownload={handleDownload}
-                    loading={isDownloading}
-                  />
-                </div>
-              </>
-            )}
+          <div className="max-w-5xl mx-auto">
+            <div className="space-y-8 animate-fade-in">
+              {videoData && (
+                <>
+                  {/* 影片資訊結果 */}
+                  <div className="relative group animate-slide-up">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/15 via-purple-500/15 to-pink-500/15 rounded-3xl blur-xl animate-glow" />
+                    <div className="relative bg-gradient-to-br from-slate-900/95 via-gray-900/95 to-slate-800/95 rounded-2xl p-8 backdrop-blur-xl border border-white/10 shadow-2xl">
+                      <VideoResult videoData={videoData} />
+                    </div>
+                  </div>
+
+                  {/* 品質選擇器 */}
+                  <div className="relative group animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/15 via-pink-500/15 to-blue-500/15 rounded-3xl blur-xl animate-glow" />
+                    <div className="relative bg-gradient-to-br from-slate-900/95 via-gray-900/95 to-slate-800/95 rounded-2xl p-8 backdrop-blur-xl border border-white/10 shadow-2xl">
+                      <QualitySelector
+                        availableQualities={videoData.availableQualities}
+                        maxQuality={videoData.maxQuality}
+                        onQualitySelect={handleQualitySelect}
+                        onDownload={handleDownload}
+                        loading={isDownloading}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         );
 
       case 'downloading':
       case 'completed':
         return (
-          <div className="max-w-2xl mx-auto animate-fade-in">
-            <div className={status === 'completed' ? 'animate-bounce-gentle' : ''}>
-              <DownloadProgress
-                progress={progress}
-                status={status}
-                filename={filename || undefined}
-                downloadUrl={downloadUrl || undefined}
-                onReset={handleReset}
-              />
+          <div className="max-w-3xl mx-auto">
+            {/* 下載進度容器 */}
+            <div className="relative group animate-fade-in">
+              <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-2xl animate-glow" />
+              <div className={`relative bg-gradient-to-br from-slate-900/95 via-gray-900/95 to-slate-800/95 rounded-2xl p-8 backdrop-blur-xl border border-white/10 shadow-2xl ${status === 'completed' ? 'animate-levitate' : 'animate-pulse-gentle'}`}>
+                <DownloadProgress
+                  progress={progress}
+                  status={status}
+                  filename={filename || undefined}
+                  downloadUrl={downloadUrl || undefined}
+                  onReset={handleReset}
+                />
+              </div>
             </div>
           </div>
         );
